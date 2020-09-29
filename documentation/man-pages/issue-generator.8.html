@@ -1,0 +1,40 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>issue-generator</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><style>
+    a.headerlink {
+      color: #c60f0f;
+      font-size: 0.8em;
+      padding: 0 4px 0 4px;
+      text-decoration: none;
+      visibility: hidden;
+    }
+
+    a.headerlink:hover {
+      background-color: #c60f0f;
+      color: white;
+    }
+
+    h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
+      visibility: visible;
+    }
+  </style><a href="issue-generator.index.html">Index </a><span style="float:right">issue-generator 1.10</span><hr><div class="refentry"><a name="issue-generator.8"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>issue-generator, issue-add-ssh-keys.service, issue-generator.service, 90-issue-generator.rules, issue-generator.conf — Creates a volatile and temporary issue file</p></div><div class="refsynopsisdiv"><a name="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">/usr/sbin/issue-generator</code>  [--prefix <em class="replaceable"><code>path</code></em>] [--help]</p></div><div class="cmdsynopsis"><p><code class="command">/usr/sbin/issue-generator</code>   network   add  |   remove  
+      <em class="replaceable"><code>interface</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">/usr/sbin/issue-generator</code>   ssh  add  |   remove   </p></div><div class="cmdsynopsis"><p><code class="command">/usr/sbin/issue-generator</code>   --version  </p></div><p><code class="filename">issue-add-ssh-keys.service</code></p><p><code class="filename">issue-generator.service</code></p></div><div class="refsect1"><a name="description"></a><h2 id="DESCRIPTION">DESCRIPTION<a class="headerlink" title="Permalink to this headline" href="#DESCRIPTION">¶</a></h2><p><span class="emphasis"><em>issue-generator</em></span>
+creates a volatile and temporary
+<a href="issue.5.html"><span class="citerefentry"><span class="refentrytitle">issue</span>(5)</span></a>
+file based on the input files and location specified in
+<a href="issue.d.5.html"><span class="citerefentry"><span class="refentrytitle">issue.d</span>(5)</span></a>.
+</p><p>If invoked with no arguments, it applies all input files and creates a
+temporary <code class="filename">issue</code> file as <code class="filename">/run/issue</code>.
+<code class="filename">/etc/issue</code> should be symlink to this file.</p></div><div class="refsect1"><a name="options"></a><h2 id="OPTIONS">OPTIONS<a class="headerlink" title="Permalink to this headline" href="#OPTIONS">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="--prefix path"><span class="term"><code class="option">--prefix</code> <em class="replaceable"><code>path</code></em></span><a class="headerlink" title="Permalink to this term" href="#--prefix%20path">¶</a></dt><dd><p>Add the prefix <code class="filename">path</code> to all used directories and files.</p></dd><dt id="network add|remove interface"><span class="term"><code class="option">network add|remove</code> <em class="replaceable"><code>interface</code></em></span><a class="headerlink" title="Permalink to this term" href="#network%20add%7Cremove%20interface">¶</a></dt><dd><p>Creates a deletes files of the format
+      <code class="filename">/run/issue.d/70-<em class="replaceable"><code>interface</code></em>.conf</code>. This
+      files contains the name of the <em class="replaceable"><code>interface</code></em> and
+      the escape codes for
+      <a href="agetty.8.html"><span class="citerefentry"><span class="refentrytitle">agetty</span>(8)</span></a>
+      to insert the IPv4 and IPv6 addresses.</p><p>By default, only network interfaces where the name starts with 'b'
+      or 'e' are added. Which interfaces are shown is configureable via a
+      regex expression in in the variable
+      <em class="replaceable"><code>NETWORK_INTERFACE_REGEX</code></em> in
+      <code class="filename">/etc/sysconfig/issue-generator</code>.
+      </p></dd><dt id="ssh add|remove"><span class="term"><code class="option">ssh add|remove</code></span><a class="headerlink" title="Permalink to this term" href="#ssh%20add%7Cremove">¶</a></dt><dd><p>Creates or deletes the file
+      <code class="filename">/run/issue.d/60-ssh_host_keys.conf</code> which contains
+      fingerprints of the public ssh keys of the host.</p></dd></dl></div></div><div class="refsect1"><a name="see_also"></a><h2 id="SEE ALSO">SEE ALSO<a class="headerlink" title="Permalink to this headline" href="#SEE%20ALSO">¶</a></h2><p><a href="issue.5.html"><span class="citerefentry"><span class="refentrytitle">issue</span>(5)</span></a>,
+<a href="issue.d.5.html"><span class="citerefentry"><span class="refentrytitle">issue.d</span>(5)</span></a>,
+<a href="agetty.8.html"><span class="citerefentry"><span class="refentrytitle">agetty</span>(8)</span></a></p></div></div></body></html>

@@ -1,0 +1,43 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>issue.d</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><style>
+    a.headerlink {
+      color: #c60f0f;
+      font-size: 0.8em;
+      padding: 0 4px 0 4px;
+      text-decoration: none;
+      visibility: hidden;
+    }
+
+    a.headerlink:hover {
+      background-color: #c60f0f;
+      color: white;
+    }
+
+    h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
+      visibility: visible;
+    }
+  </style><a href="issue-generator.index.html">Index </a><span style="float:right">issue-generator 1.10</span><hr><div class="refentry"><a name="issue.d.5"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>issue.d — Configuration for creating an issue file</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><p><code class="filename">/etc/issue.d/*</code></p><p><code class="filename">/run/issue.d/*</code></p><p><code class="filename">/usr/lib/issue.d/*</code></p></div><div class="refsect1"><a name="description"></a><h2 id="DESCRIPTION">DESCRIPTION<a class="headerlink" title="Permalink to this headline" href="#DESCRIPTION">¶</a></h2><p>
+      The file <code class="filename">/etc/issue</code> is read from
+      <a href="agetty.8.html"><span class="citerefentry"><span class="refentrytitle">agetty</span>(8)</span></a>
+      and similar tools and shown above the login prompt. While some of the
+      informations can be adjusted with variables, the file itself is static. To
+      display dynamic content,
+      <a href="issue-generator.1.html"><span class="citerefentry"><span class="refentrytitle">issue-generator</span>(1)</span></a>
+      generates a <code class="filename">/run/issue</code> file from different files.
+    </p><p>
+      Files in <code class="filename">/etc/issue.d</code> override files with the same
+      name in <code class="filename">/usr/lib/issue.d</code> and
+      <code class="filename">/run/issue.d</code>. Files in
+      <code class="filename">/run/issue.d</code> override files with the same name in
+      <code class="filename">/usr/lib/issue.d</code>. Packages should install their
+      configuration files in <code class="filename">/usr/lib/issue.d</code>. Files in
+      <code class="filename">/etc/issue.d</code> are reserved for the local
+      administrator, who may use this logic to override the files installed by
+      vendor packages. All configuration files are sorted by their filename
+      in lexicographic order, regardless of which of the directories they reside in.
+    </p></div><div class="refsect1"><a name="see_also"></a><h2 id="SEE ALSO">SEE ALSO<a class="headerlink" title="Permalink to this headline" href="#SEE%20ALSO">¶</a></h2><p>
+      <a href="agetty.8.html"><span class="citerefentry"><span class="refentrytitle">agetty</span>(8)</span></a>,
+      <a href="issue-generator.1.html"><span class="citerefentry"><span class="refentrytitle">issue-generator</span>(1)</span></a>
+    </p></div><div class="refsect1"><a name="author"></a><h2 id="AUTHOR">AUTHOR<a class="headerlink" title="Permalink to this headline" href="#AUTHOR">¶</a></h2><p>
+      <span class="emphasis"><em>issue-generator</em></span>
+      was written by Thorsten Kukuk &lt;kukuk@suse.com&gt;.
+    </p></div></div></body></html>

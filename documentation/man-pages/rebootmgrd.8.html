@@ -1,0 +1,120 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>rebootmgrd</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><style>
+    a.headerlink {
+      color: #c60f0f;
+      font-size: 0.8em;
+      padding: 0 4px 0 4px;
+      text-decoration: none;
+      visibility: hidden;
+    }
+
+    a.headerlink:hover {
+      background-color: #c60f0f;
+      color: white;
+    }
+
+    h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
+      visibility: visible;
+    }
+  </style><a href="rebootmgr.index.html">Index </a><span style="float:right">rebootmgr 1.3</span><hr><div class="refentry"><a name="rebootmgrd.8"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>rebootmgrd, rebootmgr.service, org.opensuse.RebootMgr.conf — Reboot the machine during a maintenance window.</p></div><div class="refsynopsisdiv"><a name="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">/usr/sbin/rebootmgrd</code>  [ --debug  |   --help  |   --version ]</p></div><p><code class="filename">/usr/lib/systemd/system/rebootmgr.service</code></p><p><code class="filename">/etc/dbus-1/system.d/org.opensuse.RebootMgr.conf</code></p></div><div class="refsect1"><a name="description"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>To avoid that a whole cluster or a set of machines with the same task
+    reboot at the same there, <span class="emphasis"><em>rebootmgrd</em></span> reboots
+    the machine following configured policies.</p><div class="refsect2"><a name="reboot_strategy_options"></a><h3 id="Reboot Strategies">Reboot Strategies<a class="headerlink" title="Permalink to this headline" href="#Reboot%20Strategies">¶</a></h3><p>
+	rebootmgr supports different strategies, when a reboot should be done:
+      </p><div class="variablelist"><dl class="variablelist"><dt id="instantly"><span class="term">instantly</span><a class="headerlink" title="Permalink to this term" href="#instantly">¶</a></dt><dd><p>
+	    When the signal arrives other services will be informed
+	    that we plan to reboot and do the reboot without getting any locks
+	    or waiting for a maintenance window.
+	  </p></dd><dt id="maint-window"><span class="term">maint-window</span><a class="headerlink" title="Permalink to this term" href="#maint-window">¶</a></dt><dd><p>
+	    Reboot only during a specified maintenance window. If no window is
+	    specified, reboot immediately.
+	  </p></dd><dt id="etcd-lock"><span class="term">etcd-lock</span><a class="headerlink" title="Permalink to this term" href="#etcd-lock">¶</a></dt><dd><p>
+	    Acquire a lock at etcd for the specified lock-group before
+	    reboot. If a maintenance window is specified, acquire the lock
+	    only during this window. If taking the lock takes longer than the
+	    duration of the maitnenance window, the reboot is canceld and an
+	    error logged. This option is only available if 
+	    <span class="emphasis"><em>rebootmgrd</em></span> was compiled with etcd support.
+	  </p></dd><dt id="best-effort"><span class="term">best-effort</span><a class="headerlink" title="Permalink to this term" href="#best-effort">¶</a></dt><dd><p>
+	    This is the default. If etcd is running, use etcd-lock. If no etcd
+	    is running, but a maintenance window is specified, use
+	    maint-window. If no maintenance window is specified, reboot
+	    immediately (instantly).
+	  </p></dd><dt id="off"><span class="term">off</span><a class="headerlink" title="Permalink to this term" href="#off">¶</a></dt><dd><p>
+	    rebootmgr continues to run, but ignores all signals to
+	    reboot. Setting the strategy to off does not clear the maintenance
+	    window. If rebootmgr is enabled again, it will continue to use the
+	    old specified maintenance window.
+	  </p></dd></dl></div><p>
+	The reboot strategy can be configured via
+	<a href="rebootmgr.conf.5.html"><span class="citerefentry"><span class="refentrytitle">rebootmgr.conf</span>(5)</span></a>
+	and adjusted at runtime via
+	<a href="rebootmgrctl.1.html"><span class="citerefentry"><span class="refentrytitle">rebootmgrctl</span>(1)</span></a>.
+	This changes will be written to the configuration file and survive the
+	next reboot.
+      </p></div><div class="refsect2"><a name="id-1.5.4"></a><h3 id="Locking via etcd">Locking via etcd<a class="headerlink" title="Permalink to this headline" href="#Locking%20via%20etcd">¶</a></h3><p>
+	To make sure that not all machines reboot at the same time, the
+	machines can be sorted into groups and the number of machines of a
+	group which are allowed to reboot at the same time can be configured
+	and controlled via <span class="command"><strong>etcd</strong></span>. So you can create a group
+	"<code class="literal">etcd_server</code>", which contains all machines running
+	etcd, and specify that only one etcd server is allowed to reboot at one
+	time. And a second group "<code class="literal">worker</code>", in
+	which a higher number of machines are allowed to reboot at the same
+	time.
+      </p><p>
+	The etcd path to the directory containing data for a group is:
+	"<code class="literal">/opensuse.org/rebootmgr/locks/&lt;group&gt;/</code>". This
+	directory contains two variables: "<code class="literal">mutex</code>", which is
+	by default "<code class="literal">0</code>" and can be set via
+	atomic_compare_and_swap to "<code class="literal">1</code>" to make sure that only
+	one machine has write access, and a variable "<code class="literal">data</code>"
+	containing the following json structure:
+      </p><pre class="programlisting">
+	{
+	  "max":1,
+	  "holders":[]
+	}
+      </pre><p>
+	"<code class="literal">holders</code>" will contain a unique ID of the machines
+	holding a lock. As unique ID the machine ID from
+	<code class="filename">/etc/machine-id</code> is used.
+      </p><p>
+	So a record containing two locks out of 10 possible would look like:
+      </p><pre class="programlisting">
+	{
+	  "max":10,
+	  "holders":[
+	    "3cb8c701b4d3474d99a7e88b31dd3439",
+	    "71c8efe539b280af2fe09b3b5771345e"
+	  ]
+	}
+      </pre><p>
+	A typical work-flow of a client which tries to reboot would look like:
+      </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+	    check, that there are free locks, else watch the data variable
+	    until it changes
+	  </p></li><li class="listitem"><p>
+	    get the mutex
+	  </p></li><li class="listitem"><p>
+	    add our machine ID to the list of machine holding a lock
+	  </p></li><li class="listitem"><p>
+	    release the mutex
+	  </p></li><li class="listitem"><p>
+	    reboot
+	  </p></li><li class="listitem"><p>
+	    on boot, check if we hold a lock. If yes:
+	  </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+		get the mutex
+	      </p></li><li class="listitem"><p>
+		remove the machine ID from the list
+	      </p></li><li class="listitem"><p>
+		release the mutex
+	      </p></li></ul></div></li></ul></div></div></div><div class="refsect1"><a name="options"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="--debug"><span class="term"><code class="option">--debug</code></span><a class="headerlink" title="Permalink to this term" href="#--debug">¶</a></dt><dd><p>Log additional informations during runtime. A real reboot is not
+	done in debug mode.</p></dd><dt id="--help"><span class="term"><code class="option">--help</code></span><a class="headerlink" title="Permalink to this term" href="#--help">¶</a></dt><dd><p>Display help text and exit</p></dd><dt id="--version"><span class="term"><code class="option">--version</code></span><a class="headerlink" title="Permalink to this term" href="#--version">¶</a></dt><dd><p>Output version information and exit</p></dd></dl></div></div><div class="refsect1"><a name="id-1.7"></a><h2 id="Environment">Environment<a class="headerlink" title="Permalink to this headline" href="#Environment">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="ETCD_SERVERS"><span class="term"><code class="varname">ETCD_SERVERS</code></span><a class="headerlink" title="Permalink to this term" href="#ETCD_SERVERS">¶</a></dt><dd><p>
+	    This environment variable contains a list of URLs of
+	    <span class="command"><strong>etcd</strong></span> servers. If this variable is not set,
+	    "<code class="literal">http://127.0.0.1:2379</code>" is used.
+          </p></dd></dl></div></div><div class="refsect1"><a name="see_also"></a><h2 id="See Also">See Also<a class="headerlink" title="Permalink to this headline" href="#See%20Also">¶</a></h2><p>
+      <a href="rebootmgrctl.1.html"><span class="citerefentry"><span class="refentrytitle">rebootmgrctl</span>(1)</span></a>,
+      <a href="rebootmgr.conf.5.html"><span class="citerefentry"><span class="refentrytitle">rebootmgr.conf</span>(5)</span></a>,
+      <a href="https://www.freedesktop.org/software/systemd/man/systemd.time.html"><span class="citerefentry"><span class="refentrytitle">systemd.time</span>(7)</span></a>
+    </p></div></div></body></html>

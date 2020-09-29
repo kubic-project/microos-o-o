@@ -1,0 +1,97 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 1. Introduction</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="transactional-update.html" title="The Transactional Update Guide"><link rel="up" href="transactional-update.html" title="The Transactional Update Guide"><link rel="prev" href="transactional-update.html" title="The Transactional Update Guide"><link rel="next" href="tu-howitworks.html" title="Chapter 2. Concept"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 1. Introduction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="transactional-update.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="tu-howitworks.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="tu-introduction"></a>Chapter 1. Introduction</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="tu-introduction.html#tu-introduction-description">1.1. Description</a></span></dt><dt><span class="section"><a href="tu-introduction.html#tu-introduction-definition">1.2. Definition</a></span></dt><dt><span class="section"><a href="tu-introduction.html#tu-introduction-reason">1.3. Motivation</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-introduction-description"></a>1.1. Description</h2></div></div></div><p>
+        <span class="emphasis"><em>transactional-update</em></span>
+	is an application that allows to update a Linux system and its
+	applications in an <span class="emphasis"><em>atomic</em></span> way: The update will
+	be performed in the background, not influencing the currently
+	running system. The update will be activated by	a reboot instead,
+	similar to
+	<a class="ulink" href="https://rpm-ostree.readthedocs.io/en/latest/" target="_top">rpm-ostree</a>
+	or CoreOS' previous Container OS. However
+	<span class="emphasis"><em>transactional-update</em></span> is not another
+	package manager, but is reusing the existing system tools such as
+	<span class="emphasis"><em>RPM</em></span> as the packaging format and
+	<span class="emphasis"><em>zypper</em></span> as the package manager. It depends on
+	<span class="emphasis"><em>Btrfs</em></span> due to its snapshotting and
+	copy-on-write features.
+      </p><p>
+	The idea and reason to build up on existing tools is the ability
+	to continue using existing packages and tool chains for delivery and
+	application of updates. While currently only implemented for (open)SUSE
+	environments the concept is vendor independent and may also be
+	implemented for other package managers and package formats.
+      </p><p>
+	Conceptually <span class="emphasis"><em>transactional-update</em></span>
+	creates a new snapshot with <span class="emphasis"><em>btrfs</em></span> before
+	performing any update and uses that snapshot for modifications.
+	Since btrfs snapshots contain only the difference between two versions
+	and thus are usually very small updates done with
+	<span class="emphasis"><em>transactional-update</em></span> are very space
+	efficient.
+	This also means several snapshots can be installed at the same time
+	without a problem.
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-introduction-definition"></a>1.2. Definition</h2></div></div></div><p>
+	A <span class="emphasis"><em>transactional update</em></span> (also known as
+	<span class="emphasis"><em>atomic upgrade</em></span>) is an update that
+      </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+	    is atomic:
+	  </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+		The update does not influence the running system.
+	      </p></li><li class="listitem"><p>
+		The machine can be powered off at any time. When powered on
+		again either the unmodified old state or the new state is
+		active, but no state in between.
+	      </p></li></ul></div></li><li class="listitem"><p>
+	    can be rolled back:
+	  </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+		If the upgrade fails or if a newer software version turns out
+		to not be compatible with your infrastructure, the system can
+		quickly be restored to a previous state.
+	      </p></li></ul></div></li></ul></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-introduction-reason"></a>1.3. Motivation</h2></div></div></div><p>
+	Linux distributions have had working update mechanisms for many, many
+	years - so why do we need something new? Distributions evolved,
+	introducing new concepts such as rolling releases, containers or long
+	time support releases. While the classical update mechanisms are
+	probably perfectly fine for a regular desktop user, using a
+	distribution with regular releases, other concepts may require
+	different concepts.
+      </p><p>
+	Distributions with <span class="bold"><strong>rolling updates</strong></span> face
+	the problem: how should intrusive updates be applied to a running system
+	- without breaking the update mechanism itself? Examples like the
+	migration from SysV init to systemd, a major version update of a desktop
+	environment while the desktop is still running or even only a small
+	update to D-Bus may give a good idea of the problem. The desktop
+	environment may simply terminate, killing the update process and leaving
+	the system in a broken, undefined state. If any update breaks such a
+	system there needs to be a quick way to roll back the system to the last
+	working state.
+      </p><p>
+	On <span class="bold"><strong>mission critical systems</strong></span> you want to
+	make sure that no service or user behaviour interferes with the update
+	of the system. And conversely the update should not modify the system,
+	e.g. by uncontrolled restarts of services or unexpected modifications to
+	the system in post scripts. Potential interruptions are deferred to a
+	defined maintenance window instead. For really critical systems the
+	update can be verified (e.g. using <span class="command"><strong>snapper diff</strong></span>) or
+	discarded before actually booting into the new system. If an update
+	encounters an error the new snapshot will be discarded automatically.
+      </p><p>
+	For <span class="bold"><strong>cluster nodes</strong></span> it is important that
+	the system is always in a consistent state, requires no manual
+	interaction and is able to recover itself from error conditions.
+	For these systems transactional-updates provides automatic
+	updates; snapshots with failed updates will be automatically removed.
+	Automatic reboots can be triggered using a variety of different reboot
+	methods (e.g. rebootmgr, kured or systemd), making the appliance of
+	the updates cluster aware.
+      </p><p>
+	Sometimes new kernel versions or software updates are
+	incompatible with your hardware or other software. In this case there
+	should be a quick and easy way to roll back to the state before the
+	update was applied.
+      </p><p>
+	There are other solutions available for the above problems, like
+	downloading all RPMs upfront and apply them during the boot phase.
+	This however will block the system for an unknown period of time
+	while the update is running, delaying the availablility of the system.
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="transactional-update.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="tu-howitworks.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The Transactional Update Guide </td><td width="20%" align="center"><a accesskey="h" href="transactional-update.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 2. Concept</td></tr></table></div></body></html>

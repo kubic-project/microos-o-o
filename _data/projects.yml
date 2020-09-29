@@ -1,0 +1,114 @@
+- name: <img src="/assets/images/microos-logo.svg" alt="MicroOS Logo" height="80" align="right"/> MicroOS 
+  rundown: Micro Service OS providing Transactional (Atomic) Updates upon a read-only btrfs root filesystem
+  description: >-
+    Designed to host container workloads with automated administration & patching.
+    Installing openSUSE MicroOS you get a quick, small environment for deploying Containers, or any other workload that benefits from Transactional Updates. As rolling release distribution the software is always up-to-date.
+  links:
+    - name: Documentation
+      link: https://en.opensuse.org/Portal:MicroOS
+      icon: documentation
+      color: secondary
+    - name: System Requirements
+      link: https://en.opensuse.org/Kubic:SystemRequirements
+      icon: cpu
+      color: primary
+    - name: Downloads
+      link: https://en.opensuse.org/Portal:MicroOS/Downloads
+      icon: download
+      color: success
+
+- name: <img src="/assets/images/icons/idea.svg" alt="MicroOS Logo" height="80" align="right"/> Philosophy
+  description: >-
+               ### Is predictable
+               
+               - Is not altered during runtime
+                  
+               - Will run the same artifacts consistently on every boot
+
+
+               ### Is scalable
+
+               - Eliminates efforts in configuring individual instances
+                 during runtime
+                    
+               - Can be rolled out easily repeatedly with predictable outcome
+
+
+               ### Is reliable
+
+               - Automated recovery from faulty updates
+
+- name: <img src="/assets/images/icons/update.svg" alt="MicroOS Logo" height="80" align="right"/> Atomic Updates
+  description: >-
+               ##  Transactional Updates
+               
+               ### Unique
+               
+               By using btrfs with snapshots MicroOS uses a very space
+               efficient way to store the file system's history. All the configuration
+               files in `/etc` are part of the snapshot and the rollback.
+
+               ### Flexible
+
+               * No new package format is needed
+
+               * No size limitation, neither for partitions nor the operating system
+
+               * Easy to enhance
+        
+               
+- name: Immutable OS
+  description: >-
+               ### Rollback
+               
+               * Immutable: No changes on disk
+               
+               * Rollback by rebooting to an old snapshot
+
+               * No size limits other the available storage size
+
+- name: Secure Updates
+  description: >-
+               * Get your updates via HTTPS
+
+               * Packages and repositoreis are signed by our build system
+
+               * Packages are verified
+
+               * No updates are ony in case of dependency conflicts
+
+               * No waste of space: Snapshots get deleted in case of unsuccessful updates
+
+- name: <img src="/assets/images/icons/work.svg" alt="MicroOS Logo" height="80" align="right"/> Workloads
+  rundown: Applications are installed in containers rather than the root filesystem
+  description: >-
+               * Isolated from the core filesystem
+               
+               * Reduced ability for malicious applications to compromise the system
+                 
+               * New installation without reboot
+               
+               * Update in atomic way possible (create new, kill old)
+               
+               * Easy rollback
+
+
+- name: Debugging
+  rundown: Toolbox available for debugging
+  description: >-
+               ### Read-only root filesystem:
+
+               * Reboot needed to install additional tools
+               
+               * Situation after reboot is different than before
+
+
+               ### Toolbox
+               
+               * Launches small, privileged container
+
+               * Root filesystem available below `/media/root`
+
+               * zypper to install the necessary tools
+
+               * Persistent between usages

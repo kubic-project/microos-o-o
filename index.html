@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<div class="container">
+	<div class="d-md-flex flex-md-equal py-3">
+		
+		<div class="p-3 overflow-hidden w-100 my-auto text-center">
+			<img src="{{ "/assets/images/microos-logo.svg" | prepend: site.baseurl }}" style="max-width:200px;">
+			<h1 class="display-4 font-weight-normal">{{ site.title }}</h1>
+			<p class="lead font-weight-normal">{{ site.description }}</p>
+		</div>
+	</div>
+</div>
+</div>
+<div class="position-relative overflow-hidden w-100 bg-dark text-white">
+	<div class="container">
+		<div class="row">
+			{% for project in site.data.projects %}
+			<div class="col-md-6 p-5 my-auto">
+				<h1 class="display-4 font-weight-normal">{{ project.name }}</h1>
+				<p class="lead font-weight-normal">
+					{{ project.rundown }}
+				</p>
+				{{ project.description | markdownify }}
+				{% for link in project.links %}
+				<a class="btn btn-{{ link.color }} mb-2" href="{{ link.link }}">
+					{% include icons/{{ link.icon }}.svg %}
+					<span class="hidden-xs-down" lang="en">{{ link.name }}</span>
+				</a>
+				{% endfor %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
