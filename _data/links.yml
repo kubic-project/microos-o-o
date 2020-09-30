@@ -1,0 +1,12 @@
+- name: Documentation
+  link: https://en.opensuse.org/Portal:MicroOS
+  icon: documentation
+  color: secondary
+- name: System Requirements
+  link: https://en.opensuse.org/Kubic:SystemRequirements
+  icon: cpu
+  color: primary
+- name: Downloads
+  link: https://en.opensuse.org/Portal:MicroOS/Downloads
+  icon: download
+  color: success

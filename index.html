@@ -8,21 +8,33 @@ layout: default
 			<img src="{{ "/assets/images/microos-logo.svg" | prepend: site.baseurl }}" style="max-width:200px;">
 			<h1 class="display-4 font-weight-normal">{{ site.title }}</h1>
 			<p class="lead font-weight-normal">{{ site.description }}</p>
+                        <p>Designed to host container workloads with automated administration & patching.
+                          Installing openSUSE MicroOS you get a quick, small
+                          environment for deploying Containers, or any other
+                          workload that benefits from Transactional
+                          Updates. As rolling release distribution the
+                          software is always up-to-date.</p>
+                        {% for link in site.data.links %}
+			<a class="btn btn-{{ link.color }} mb-2" href="{{ link.link }}">
+			  {% include icons/{{ link.icon }}.svg %}
+			  <span class="hidden-xs-down" lang="en">{{ link.name }}</span>
+			</a>
+			{% endfor %}
 		</div>
 	</div>
 </div>
-</div>
+
 <div class="position-relative overflow-hidden w-100 bg-dark text-white">
 	<div class="container">
 		<div class="row">
-			{% for project in site.data.projects %}
+			{% for feature in site.data.features %}
 			<div class="col-md-6 p-5 my-auto">
-				<h1 class="display-4 font-weight-normal">{{ project.name }}</h1>
+				<h1 class="display-4 font-weight-normal">{{ feature.name }}</h1>
 				<p class="lead font-weight-normal">
-					{{ project.rundown }}
+					{{ feature.rundown }}
 				</p>
-				{{ project.description | markdownify }}
-				{% for link in project.links %}
+				{{ feature.description | markdownify }}
+				{% for link in feature.links %}
 				<a class="btn btn-{{ link.color }} mb-2" href="{{ link.link }}">
 					{% include icons/{{ link.icon }}.svg %}
 					<span class="hidden-xs-down" lang="en">{{ link.name }}</span>
