@@ -20,48 +20,47 @@
 
 - name: Atomic Updates <img src="/assets/images/icons/update.svg" alt="Update Icon" height="60" align="left"/>
   description: >-
-               ##  Transactional Updates
+               ###  Transactional Updates
                
-               ### Unique
+               #### Unique
                
                By using btrfs with snapshots MicroOS uses a very space
                efficient way to store the file system's history. All the configuration
                files in `/etc` are part of the snapshot and the rollback.
 
-               ### Flexible
+               #### Flexible
 
-               * No new package format is needed
+               * No new package format is needed, use standard openSUSE RPMs
 
                * No size limitation, neither for partitions nor the operating system
 
                * Easy to enhance
         
                
-- name: Immutable OS <img src="/assets/images/icons/lock.svg" alt="Lock Icon" height="60" align="left"/>
+- name: Rollback <img src="/assets/images/icons/shield.svg" alt="Shield Icon" height="60" align="left"/>
   description: >-
-               ### Rollback
+               ### MicroOS is an Immutable OS, rollback is simple
                
                * Immutable: No changes on disk
                
-               * Rollback by rebooting to an old snapshot
-
-               * No size limits other the available storage size
+               * Rollback by rebooting to an old BTRFS snapshot
 
 - name: Secure Updates <img src="/assets/images/icons/key.svg" alt="Key Icon" height="60" align="left"/>
   description: >-
                * Get your updates via HTTPS
 
-               * Packages and repositoreis are signed by our build system
+               * Packages and repositories are signed by our build system
 
                * Packages are verified
 
-               * No updates are ony in case of dependency conflicts
+               * No updates are done in case of dependency conflicts
 
-               * No waste of space: Snapshots get deleted in case of unsuccessful updates
+               * No waste of space: Filesystem snapshots get deleted in case of unsuccessful updates
 
 - name: Workloads <img src="/assets/images/icons/work.svg" alt="Work Icon" height="60" align="left"/>
-  rundown: Applications are installed in containers rather than the root filesystem
   description: >-
+               Applications are installed in containers rather than the root filesystem:
+
                * Isolated from the core filesystem
 
                * Reduced ability for malicious applications to compromise the system
@@ -73,21 +72,13 @@
                * Easy rollback
 
 - name: Debugging <img src="/assets/images/icons/tool.svg" alt="Tool Icon" height="60" align="left"/>
-  rundown: Toolbox available for debugging
   description: >-
-               ### Read-only root filesystem:
-
-               * Reboot needed to install additional tools
+               ### Debugging Toolbox Container
                
-               * Situation after reboot is different than before
-
-
-               ### Toolbox
-               
-               * Launches small, privileged container
+               * Launches privileged container
 
                * Root filesystem available below `/media/root`
 
-               * zypper to install the necessary tools
+               * zypper to install the necessary tools, available without reboot
 
                * Persistent between usages
