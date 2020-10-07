@@ -3,7 +3,7 @@
   icon: documentation
   color: secondary
 - name: System Requirements
-  link: https://en.opensuse.org/Kubic:SystemRequirements
+  link: '#hardware'
   icon: cpu
   color: primary
 - name: Downloads

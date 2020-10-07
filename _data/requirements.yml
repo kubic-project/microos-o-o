@@ -1,0 +1,13 @@
+- name: Memory <img src="/assets/images/icons/chip.svg" alt="Memory Icon" height="60" align="left"/>
+  description: >-
+    * minimum 1 GB physical RAM
+
+    * additional memory is needed for your workload
+
+- name: Storage <img src="/assets/images/icons/hdd.svg" alt="Storage Icon" height="60" align="left"/>
+  description: >-
+    * minimum 20 GB available disk space
+
+    * recommended: 40GB or more
+
+    * increasing based on the needs of your container workloads
