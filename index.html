@@ -29,7 +29,7 @@ layout: default
 		<div class="row">
 			{% for feature in site.data.features %}
 			<div class="col-md-6 p-5 mb-auto">
-				<h1 class="display-4 font-weight-normal">{{ feature.name }}</h1>
+				<h1 class="display-4 font-weight-normal">{% if feature.icon %}{% include icons/{{ feature.icon }}.svg %} {% endif %}{{ feature.name }}</h1>
 				<p class="lead font-weight-normal">
 					{{ feature.rundown }}
 				</p>
@@ -51,17 +51,11 @@ layout: default
     <div class="row">
       {% for requirement in site.data.requirements %}
       <div class="col-md-6 p-5 mb-auto">
-	<h1 class="display-4 font-weight-normal">{{ requirement.name }}</h1>
+	<h1 class="display-4 font-weight-normal">{% if requirement.icon %}{% include icons/{{ requirement.icon }}.svg %} {% endif %}{{ requirement.name }}</h1>
 	<p class="lead font-weight-normal">
 	  {{ requirement.rundown }}
 	</p>
 	{{ requirement.description | markdownify }}
-	{% for link in requirement.links %}
-	<a class="btn btn-{{ link.color }} mb-2" href="{{ link.link }}">
-	  {% include icons/{{ link.icon }}.svg %}
-	  <span class="hidden-xs-down" lang="en">{{ link.name }}</span>
-	</a>
-	{% endfor %}
       </div>
       {% endfor %}
     </div>

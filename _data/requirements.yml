@@ -1,10 +1,12 @@
-- name: Memory <img src="/assets/images/icons/chip.svg" alt="Memory Icon" height="60" align="left"/>
+- name: Memory
+  icon: chip
   description: >-
     * minimum 1 GB physical RAM
 
     * additional memory is needed for your workload
 
-- name: Storage <img src="/assets/images/icons/hdd.svg" alt="Storage Icon" height="60" align="left"/>
+- name: Storage
+  icon: hdd
   description: >-
     * minimum 20 GB available disk space
 

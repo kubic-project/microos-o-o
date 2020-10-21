@@ -1,4 +1,5 @@
-- name: Philosophy <img src="/assets/images/icons/idea.svg" alt="Idea Icon" height="60" align="left"/>
+- name: Philosophy
+  icon: idea
   description: >-
                ### Is predictable
                
@@ -18,7 +19,8 @@
 
                * Automated recovery from faulty updates
 
-- name: Atomic Updates <img src="/assets/images/icons/update.svg" alt="Update Icon" height="60" align="left"/>
+- name: Atomic Updates
+  icon: update
   description: >-
                ###  Transactional Updates
                
@@ -37,7 +39,8 @@
                * Easy to enhance
         
                
-- name: Rollback <img src="/assets/images/icons/shield.svg" alt="Shield Icon" height="60" align="left"/>
+- name: Rollback
+  icon: shield
   description: >-
                ### MicroOS is an Immutable OS, rollback is simple
                
@@ -45,7 +48,8 @@
                
                * Rollback by rebooting to an old BTRFS snapshot
 
-- name: Secure Updates <img src="/assets/images/icons/key.svg" alt="Key Icon" height="60" align="left"/>
+- name: Secure Updates
+  icon: key
   description: >-
                * Get your updates via HTTPS
 
@@ -57,7 +61,8 @@
 
                * No waste of space: Filesystem snapshots get deleted in case of unsuccessful updates
 
-- name: Workloads <img src="/assets/images/icons/work.svg" alt="Work Icon" height="60" align="left"/>
+- name: Workloads
+  icon: work
   description: >-
                Applications are installed in containers rather than the root filesystem:
 
@@ -71,7 +76,8 @@
 
                * Easy rollback
 
-- name: Debugging <img src="/assets/images/icons/tool.svg" alt="Tool Icon" height="60" align="left"/>
+- name: Debugging
+  icon: tool
   description: >-
                ### Debugging Toolbox Container
                
