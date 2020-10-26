@@ -1,0 +1,4 @@
+@import "{{ site.theme }}";
+
+h1 svg.bi {
+    color: var(--green);
