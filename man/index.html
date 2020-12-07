@@ -1,0 +1,26 @@
+---
+layout: default
+title:	"Man Pages"
+---
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{{ "/" | prepend: site.baseurl}}"><img src="/assets/images/symbolic.svg" class="mr-1" style="height:1em; vertical-align:middle;">{{ site.title_short }}</a></li>
+  <li class="breadcrumb-item active" aria-current="page">Man Pages</li>
+</ol>
+<div class="container my-3">
+  <div class="col-12 col-lg-9 mx-3 mx-auto">
+    <div class="row">
+      {% assign char_groups = site.data.manpages.docs | group_by: 'index' | sort_natural %}
+      {% for char in char_groups %}
+      <div class="col-sm-4">
+        <h2>{{ char.name }}</h2>
+        <ul>
+          {% for manpage in char.items %}
+          <li><a href="{{ manpage.url }}">{{ manpage.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+      <div class="col-sm-8">Hier könnte Ihre Manpage stehen</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{% assign first_char = page.title | truncate: 1, '' | upcase %}
+{% assign char_groups = site.data.manpages.docs | group_by: 'initial' | sort_natural %}
+{% assign manpages = char_groups | where: "name", first_char | first %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{{ site.baseurl }}/">
+      {% if site.breadcrumb_icon %}
+      {{ site.breadcrumb_icon }}
+      {% endif %}
+      {{ site.title_short }}
+    </a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="{{ site.baseurl }}/man">
+      Man Pages
+    </a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="{{ site.baseurl }}/man/{{ first_char }}">
+      {{ first_char }}
+    </a>
+  </li>
+  <li class="breadcrumb-item active">
+    {{ page.title }}
+  </li>
+</ol>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>{{ first_char }}</h1>
+      <ul>
+        {% for manpage in manpages.items %}
+        <li><a href="{{ manpage.url }}">{{ manpage.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-sm-8">
+      <header class="article article-header col-md-9 col-12 mx-auto py-3">
+	<h1 class="decorated-title">{{ page.title }}</h1>
+	<p class="text-center text-muted">
+	  {{ page.date | date: site.date_format }}
+	</p>
+	{% if page.image %}
+	<img class="rounded mx-auto d-block h-carousel"
+	     src="{% if page.image contains 'http' %}{% else %}{{ site.baseurl }}{% endif %}{{ page.image }}"
+	     alt="{{ page.title | escape }}">
+	{% endif %}
+      </header>
+      <div class="mx-auto text-justify">
+	{{ page.content }}
+      </div>
+    </div>
+  </div>
+</div>
