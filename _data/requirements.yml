@@ -3,7 +3,7 @@
   description: >-
     * minimum 1 GB physical RAM
 
-    * additional memory is needed for your workload
+    * additional memory is needed for your workload, and to use some advanced YaST installation scenarios (eg. Remote Install)
 
 - name: Storage
   icon: hdd
