@@ -63,6 +63,15 @@
 
 - name: Workloads
   icon: work
+  links:
+    - name: Documentation
+      link: https://en.opensuse.org/Portal:Container
+      icon: documentation
+      color: secondary
+    - name: Registry
+      link: https://registry.opensuse.org/
+      icon: install
+      color: success
   description: >-
                Applications are installed in containers rather than the root filesystem:
 
@@ -75,8 +84,6 @@
                * Update in atomic way possible (create new, kill old)
 
                * Easy rollback
-
-               * [openSUSE Container Registry](https://en.opensuse.org/Portal:Container) offers great choice of containers for MicroOS
 
 - name: Debugging
   icon: tool
