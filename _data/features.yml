@@ -76,6 +76,8 @@
 
                * Easy rollback
 
+               * [openSUSE Container Registry](https://en.opensuse.org/Portal:Container) offers great choice of containers for MicroOS
+
 - name: Debugging
   icon: tool
   description: >-
