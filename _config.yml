@@ -2,7 +2,7 @@ title: openSUSE MicroOS
 title_short: MicroOS
 email: opensuse-factory@opensuse.org
 description: Micro Service OS built by the openSUSE community
-copyright: '© 2017–2020 openSUSE contributors'
+copyright: '© 2017–2021 openSUSE contributors'
 baseurl: ""
 url: ""
 plugins:

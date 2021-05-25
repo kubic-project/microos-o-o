@@ -2,7 +2,7 @@
 layout: default
 ---
 <div class="container">
-	<div class="d-md-flex flex-md-equal py-3">
+	<div class="bg-dark test-white">
 		
 		<div class="p-3 overflow-hidden w-100 my-auto text-center">
 			<img src="{{ "/assets/images/microos-logo.svg" | prepend: site.baseurl }}" style="max-width:200px;">
@@ -23,6 +23,23 @@ layout: default
 		</div>
 	</div>
 </div>
+
+<div class="container">
+        <div class="d-md-flex flex-md-equal py-3">
+
+                <div class="p-3 overflow-hidden w-100 my-auto">
+                  <h1 class="display-4">
+                                <a href="{{ '/blog' | prepend: site.baseurl }}">{{ site.name }} Blog</a>
+                        </h1>
+                        <div class="row">
+                        {% for post in site.posts limit:2 %}
+                        {% include single-post.html %}
+                        {% endfor %}
+                        </div>
+                </div>
+        </div>
+</div>
+
 
 <div class="position-relative overflow-hidden w-100 bg-dark text-white">
 	<div class="container">
