@@ -12,5 +12,5 @@
   color: success
 - name: Report a Bug
   link: https://bugzilla.opensuse.org/enter_bug.cgi?product=openSUSE+Tumbleweed&component=MicroOS&format=guided
-  icon: bug
+  icon: spanner
   color: warning
