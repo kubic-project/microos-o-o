@@ -67,7 +67,7 @@
     - name: Documentation
       link: https://en.opensuse.org/Portal:Container
       icon: documentation
-      color: secondary
+      color: light
     - name: Registry
       link: https://registry.opensuse.org/
       icon: install

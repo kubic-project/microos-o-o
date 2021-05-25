@@ -1,7 +1,7 @@
 - name: Documentation
   link: https://en.opensuse.org/Portal:MicroOS
   icon: documentation
-  color: secondary
+  color: light
 - name: System Requirements
   link: '#hardware'
   icon: cpu
