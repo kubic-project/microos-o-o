@@ -33,10 +33,10 @@ navbar_links:
 footer_links:
   -
     text: Source Code
-    link: https://github.com/kubic-project/kubic-o-o
+    link: https://github.com/kubic-project/microos-o-o
   -
     text: License
-    link: https://github.com/kubic-project/kubic-o-o/blob/master/LICENSE
+    link: https://github.com/kubic-project/microos-o-o/blob/master/LICENSE
 
 permalink: /blog/:year-:month-:day-:title/
 
