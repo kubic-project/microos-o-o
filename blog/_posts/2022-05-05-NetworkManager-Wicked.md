@@ -26,16 +26,15 @@ to work, or, in worst case, everything needs to be re-created from scratch for
 NetworkManager. There is no feature parity between this tools, so an automatic
 conversation may not work in all cases.
 
-The `/etc/sysconfig/network/ifcfg-*` files should be compatible, but it's not
-clear if there are no corner cases where they are incompatible. A migratoin
-should be pretty easy in this case. But if a native wicked xml configuration
-is in use, a manual migration of the configuration has to be done.
+And even worse, some tools store configuration data in different places
+depending on the network stack. E.g. firewalld zone informations are either
+stored in the NetworkManager configuration files, in ifcfg-* or in the native
+firewalld configuration files.
 
 ## Migration
 
-If the network configuration got created during installation or if only
-`ifcfg-*` files are used, the switch to NetworkManager should be very
-simple. Just replace wicked with NetworkManager:
+If the machine get's configured via dhcp and no fancy network tools or
+configuration is used, exchanging wicked with NetworkManager is quite simple:
 
 ```
 # transactional-update shell
@@ -45,3 +44,8 @@ simple. Just replace wicked with NetworkManager:
 -> exit
 # reboot
 ```
+
+But if the network configuration is not a simple dhcp client or if there are
+problems with the network afterwards, the clear recommendation is to make a
+fresh installation of openSUSE MicroOS. With the openSUSE MicroOS design, this
+should be quite simple and fast.
