@@ -20,7 +20,7 @@ a Desktop machine up to this point (Ryzen 5 5600, RX6700XT, and a couple of
 1440p Displays, fairly vanilla stuff), I've been daily driving plasma-wayland,
 as the maintainer.   So recently, I have switched my workstation up to using a
 laptop, with a usb-c dock (Thinkpad T16, Ryzen 7 Pro 6850U, Radeon aGPU, Lenovo
-Universal USB-C Dock) same displays), Hardly exotic, but having a dock in the
+Universal USB-C Dock, same displays), Hardly exotic, but having a dock in the
 mix does add a wrinkle or two.
 
 In addition, I did recently get a NAS built up and tossed on the network, which
@@ -125,18 +125,18 @@ the KDE flatpak guide
 [develop.kde.org](https://develop.kde.org/docs/packaging/flatpak).
 
 2. Some of my personal issue, with this hardware, I *suspect* is due to the
-   current sddm that we use not being wayland compatible.  So when booting right
-now, to use wayland, you're getting sddm as an X11 session, and plasma as a
-wayland session.   There is wayland support upstream, in some form, but it is
-not currently released, and I'm not personally interested in having microOS
-Plasma shipping a different version of sddm, than Tumbleweed does.  So what can
-be done here?  If you're a coder that can help, sddm is developed at
+   current sddm not being wayland compatible.  So when booting right now, to use
+wayland, you're getting sddm as an X11 session, and plasma as a wayland session.
+There is wayland support upstream, in some form, but it is not currently
+released. I'm not interested in having microOS Plasma shipping a different
+version of sddm, than Tumbleweed does.  So what can be done here?  If you're a
+coder that can help, sddm is developed at
 [sddm](https://github.com/sddm/sddm), go see if you can't help out.
 
 3. Feature parity with GNOME.   Its what it says on the tin.  The only "easy"
    way I sorted out how to mount a smb share in userspace (just to use an
 example) was to use t-u to install the gvfs components necessary, so that I was
-able to do a `gio mount smb://host/share`.   And that still doesn't give any
+able to do a `gio mount smb://host/share`.   That still doesn't give any
 sort of enabling within dolphin itself to mount them.   And honestly, that took
 me most of an afternoon, bouncing around various places on the web to figure out
 how to do.  If our target is users that want a "install it and go to work"
@@ -153,21 +153,23 @@ more help than that.   I'm not trying to make anybody feel guilty, we've all got
 lives, and it's not like I'm being paid for this.   That being said, I would
 rather see the plasma version of microOS Desktop go away, than be pushed to
 release in the state it's in, with some vague hope that the problems are going
-to be fixed.  For this to have *any* chance of getting past anything better than
-a "Beta" at this point, I need *real* help, people pushing SR's, people actually
+to be fixed.
+
+For this to have *any* chance of getting past anything better than
+a "Beta", I need *real* help, people pushing SR's, people actually
 reporting bugs properly on the bugzilla, etc.   Reddit is not a bugtracker.
 Matrix is not a bugtracker.  IRC is not a bugtracker.  Yes, the bugzilla can be
-a little clunky, but its the tool we've got.   And I don't have the time, or the
+a little clunky, but it's the tool we've got. I don't have the time, or the
 inclination to be constantly monitoring things like Reddit/Matrix, nor should
 anybody else.   It seems like there are lots of folks that feel strongly that
 MicroOS Desktop Plasma needs to exist.   But so far, I've seen darned little
 actual "put your money where your mouth is" when it comes to some of the loudest
 about it.
 
-Long and short of it, my daily driver is actually going to be GNOME for right
-now, because I actually need to use my computer, and right now, microOS Desktop
+Long and short of it: my daily driver is actually going to be GNOME for right
+now, because I actually need to use my computer. Right now, microOS Desktop
 Plasma is putting obstacles in my way.   I do have another machine here that
-still has Plasma on it, for testing things on actual hardware, and I'm not
-throwing my hands up, grabbing my ball, and going home, but I also don't want to
-continue to be giving anybody, any false hope that I'm going to magically wake
-up tomorrow and pull the proverbial magic rabbit out of my hat.
+still has Plasma on it, for testing things on actual hardware. I'm not
+throwing my hands up, grabbing my ball, and going home. I also don't want to
+to be giving any false hope that I'm going to magically wake up tomorrow and
+pull the proverbial magic rabbit out of my hat.
