@@ -29,8 +29,8 @@ is sharing things on the LAN, mostly using samba (this will be important later)
 **I want to preface the following commentary, by saying this is not a Ragequit,
 plasma is garbage, everything sucks post.  I'm currently the most active
 maintainer of microOS Desktop Plasma, and a long time KDE user and sometime
-contributor.   I absolutely appreciate the effort that goes in both upstream,
-and from the openSUSE KDE team, and do not intend any of this to be
+contributor.   I absolutely appreciate the effort that goes into Plasma, both
+upstream, and from the openSUSE KDE team, and do not intend any of this to be
 disparaging those efforts.**
 
 ## The problems
@@ -99,10 +99,10 @@ Quite literally, everything has worked.   The Wayland session sees my external
 displays just fine, I have no screen flickering, my mouse and keyboard work, I
 can mount a samba share right through nautilus.
 
-And I even found something that I didn't even know was broken, until I set my
-personal e-mail up in Evolution, and connected to my mail host, and all of a
-sudden, I've got folders showing up from that IMAP host, that the kontact/kmail
-flatpak can't even see, for one reason or another
+I even found something that I didn't even know was broken, I set my personal
+e-mail up in Evolution, connect to my mail host, and all of a sudden, I've got
+folders showing up from that IMAP host, that the kontact/kmail flatpak can't
+even see, for one reason or another
 
 I've had exactly one "glitch" in the few days so far that I've been on gnome,
 that was likely self-inflicted, where I disconnected the usb-c while the laptop
@@ -127,18 +127,18 @@ packaging format, and finding the spots where portals have to be tweaked, etc.
    work with them, I *highly* suggest heading over to the KDE flatpak guide
    [develop.kde.org](https://develop.kde.org/docs/packaging/flatpak).
 
-2. Some of my personal issue, with this hardware, I *suspect* are due to the
+2. Some of my personal issues, with this hardware, I *suspect* are due to the
    current sddm not being wayland compatible.  When booting right now, to use
 wayland, you're getting sddm as an X11 session, and plasma as a wayland session.
 There is wayland support upstream, in some form, but it is not currently
 released. I'm not interested in having microOS Plasma shipping a different
-version of sddm, than Tumbleweed does.
+version of sddm than Tumbleweed does.
 
    So what can be done here?  If you're a coder that can help, sddm is
    developed at [sddm](https://github.com/sddm/sddm), go see if you can't help
    out.
 
-3. Feature parity with GNOME.   Its what it says on the tin.  The only "easy"
+3. Feature parity with GNOME.   It's what it says on the tin.  The only "easy"
    way I sorted out how to mount a smb share in userspace (just to use an
 example) was to use t-u to install the gvfs components necessary, so that I was
 able to do a `gio mount smb://host/share`.   That still doesn't give any
@@ -146,7 +146,7 @@ sort of way within dolphin itself to mount them.   And honestly, that took
 me most of an afternoon, bouncing around various places on the web to figure out
 how to do.
 
-   If our target is users that want a "install it and go to work" system (and
+   If our target is users that want an "install it and go to work" system (and
    it is.), this sort of thing just isn't going to be acceptable.   I do *not*
    know what the official stance from the dolphin or KDE developers is on this
    one, but my websearching didn't turn up much at all about such things.
