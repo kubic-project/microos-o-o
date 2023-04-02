@@ -170,9 +170,9 @@ and everything else.
    I need *real* help, people pushing SR's, people actually reporting bugs
    properly on the bugzilla, etc.
 
-   **Reddit is not a bugtracker.
-   Matrix is not a bugtracker.
-   IRC is not a bugtracker.**
+   **Reddit is not a bugtracker.**
+   **Matrix is not a bugtracker.**
+   **IRC is not a bugtracker.**
 
    Yes, the bugzilla can be a little clunky, but it's the tool we've got. I
    don't have the time, or the inclination to be constantly monitoring things
@@ -186,9 +186,9 @@ and everything else.
    fun, it just isn't going to happen, no matter how many end users want it to.
 
 Long and short of it: my daily driver is actually going to be GNOME for right
-now, because I actually need to use my computer. Right now, microOS Desktop
-Plasma is putting obstacles in my way.   I do have another machine here that
-still has Plasma on it, for testing things on actual hardware. I'm not
-throwing my hands up, grabbing my ball, and going home. I also don't want to
-to be giving any false hope that I'm going to magically wake up tomorrow and
-pull the proverbial magic rabbit out of my hat.
+now, because I actually need to use my computer. As much as I personally prefer
+KDE to GNOME, MicroOS Desktop Plasma is putting obstacles in my way.   I do have
+another machine here that still has Plasma on it, for testing things on actual
+hardware. I'm not throwing my hands up, grabbing my ball, and going home. I also
+don't want to to be giving any false hope that I'm going to magically wake up
+tomorrow and pull the proverbial magic rabbit out of my hat.
