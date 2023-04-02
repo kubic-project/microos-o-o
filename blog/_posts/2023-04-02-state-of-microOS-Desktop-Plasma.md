@@ -123,9 +123,9 @@ What can I do to help?
 not a small thing to do, to get the *entire* KDE Software Collection into a new
 packaging format, and finding the spots where portals have to be tweaked, etc.
 
-So if you're the sort that is interested in flatpaks, and learning how to work
-with them, I *highly* suggest heading over to the KDE flatpak guide
-[develop.kde.org](https://develop.kde.org/docs/packaging/flatpak).
+   So if you're the sort that is interested in flatpaks, and learning how to
+   work with them, I *highly* suggest heading over to the KDE flatpak guide
+   [develop.kde.org](https://develop.kde.org/docs/packaging/flatpak).
 
 2. Some of my personal issue, with this hardware, I *suspect* are due to the
    current sddm not being wayland compatible.  When booting right now, to use
@@ -134,8 +134,9 @@ There is wayland support upstream, in some form, but it is not currently
 released. I'm not interested in having microOS Plasma shipping a different
 version of sddm, than Tumbleweed does.
 
-So what can be done here?  If you're a coder that can help, sddm is developed at
-[sddm](https://github.com/sddm/sddm), go see if you can't help out.
+   So what can be done here?  If you're a coder that can help, sddm is
+   developed at [sddm](https://github.com/sddm/sddm), go see if you can't help
+   out.
 
 3. Feature parity with GNOME.   Its what it says on the tin.  The only "easy"
    way I sorted out how to mount a smb share in userspace (just to use an
@@ -145,44 +146,44 @@ sort of way within dolphin itself to mount them.   And honestly, that took
 me most of an afternoon, bouncing around various places on the web to figure out
 how to do.
 
-If our target is users that want a "install it and go to work" system (and it
-is.), this sort of thing just isn't going to be acceptable.   I do *not* know
-what the official stance from the dolphin or KDE developers is on this one, but
-my websearching didn't turn up much at all about such things.
+   If our target is users that want a "install it and go to work" system (and
+   it is.), this sort of thing just isn't going to be acceptable.   I do *not*
+   know what the official stance from the dolphin or KDE developers is on this
+   one, but my websearching didn't turn up much at all about such things.
 
 4. Relying on me, to continue to do this basically by myself.  I am being quite
    frank with you, as the users.  I am *not* the guy that is going to handcraft
 a linux distribution from scratch, solve all the problems, squash all the bugs,
 and everything else.
 
-I absolutely do appreciate those of you that have been talking up MicroOSD
-Plasma in the various communication channels, but I need more help than that.
+   I absolutely do appreciate those of you that have been talking up MicroOSD
+   Plasma in the various communication channels, but I need more help than that.
 
-I'm not trying to make anybody feel guilty, we've all got lives, and it's not
-like I'm being paid for this.
+   I'm not trying to make anybody feel guilty, we've all got lives, and it's
+   not like I'm being paid for this.
 
-That being said, I would rather see the plasma version of microOS Desktop go
-away, than be pushed to release in the state it's in, with some vague hope that
-the problems are going to be fixed.
+   That being said, I would rather see the plasma version of microOS Desktop go
+   away, than be pushed to release in the state it's in, with some vague hope
+   that the problems are going to be fixed.
 
-For this to have *any* chance of getting past anything better than a "Beta", I
-need *real* help, people pushing SR's, people actually reporting bugs properly
-on the bugzilla, etc.
+   For this to have *any* chance of getting past anything better than a "Beta",
+   I need *real* help, people pushing SR's, people actually reporting bugs
+   properly on the bugzilla, etc.
 
-Reddit is not a bugtracker.
-Matrix is not a bugtracker.
-IRC is not a bugtracker.
+   **Reddit is not a bugtracker.
+   Matrix is not a bugtracker.
+   IRC is not a bugtracker.**
 
-Yes, the bugzilla can be a little clunky, but it's the tool we've got. I don't
-have the time, or the inclination to be constantly monitoring things like
-Reddit/Matrix, nor should anybody else.
+   Yes, the bugzilla can be a little clunky, but it's the tool we've got. I
+   don't have the time, or the inclination to be constantly monitoring things
+   like Reddit/Matrix, nor should anybody else feel like they need to.
 
-It seems like there are lots of folks that feel strongly that MicroOS Desktop
-Plasma needs to exist.   But so far, I've seen darned little actual "put your
-money where your mouth is" and that is a problem, with a project like this.
-We are a community distribution, run by volunteers, and without people
-contributing their time and energy to do the stuff that isn't all that fun, it
-just isn't going to happen, no matter how many end users want it to.
+   It seems like there are lots of folks that feel strongly that MicroOS
+   Desktop Plasma needs to exist.   But so far, I've seen darned little actual
+   "put your money where your mouth is" and that is a problem, with a project
+   like this. We are a community distribution, run by volunteers, and without
+   people contributing their time and energy to do the stuff that isn't all that
+   fun, it just isn't going to happen, no matter how many end users want it to.
 
 Long and short of it: my daily driver is actually going to be GNOME for right
 now, because I actually need to use my computer. Right now, microOS Desktop
