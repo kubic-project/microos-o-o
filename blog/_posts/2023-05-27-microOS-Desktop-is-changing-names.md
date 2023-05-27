@@ -13,6 +13,7 @@ We are pleased to announce a name change for both MicroOS Desktop GNOME and
 MicroOS Desktop Plasma.
 
 MicroOS Desktop GNOME is now: [openSUSE Aeon](https://aeondesktop.org)
+
 MicroOS Desktop Plasma is now: [openSUSE Kalpa](https://kalpadesktop.org)
 
 ## Why the name changes?
