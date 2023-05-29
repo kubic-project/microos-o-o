@@ -27,7 +27,6 @@ At present, amongst the microOS "family" offered are:
     - openSUSE MicroOS
     - openSUSE Leap Micro
     - SUSE Linux Enterprise Micro
-    - SUSE ALP Micro
 
 - Desktop Products
     - openSUSE MicroOS Desktop GNOME
