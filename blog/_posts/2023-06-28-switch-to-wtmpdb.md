@@ -2,7 +2,7 @@
 layout: post
 title:  "Switch from wtmp to Y2038 safe wtmpdb"
 date:   2023-06-28 10:48:00 +0200
-author: Shawn W Dunn
+author: Thorsten Kukuk
 ---
 
 ## Intro
