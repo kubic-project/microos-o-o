@@ -1,14 +1,14 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 3. System setup</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="transactional-update.html" title="The Transactional Update Guide"><link rel="up" href="transactional-update.html" title="The Transactional Update Guide"><link rel="prev" href="tu-howitworks.html" title="Chapter 2. Concept"><link rel="next" href="tu-files.html" title="Chapter 4. Files"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 3. System setup</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tu-howitworks.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="tu-files.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="tu-setup"></a>Chapter 3. System setup</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="tu-setup.html#tu-setup-readonly">3.1. Read-only file system</a></span></dt><dt><span class="section"><a href="tu-setup.html#tu-setup-var">3.2. /var</a></span></dt><dt><span class="section"><a href="tu-setup.html#tu-setup-etc">3.3. /etc</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-setup-readonly"></a>3.1. Read-only file system</h2></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 4. System setup</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="transactional-update.html" title="The Transactional Update Guide"><link rel="up" href="transactional-update.html" title="The Transactional Update Guide"><link rel="prev" href="tu-howitworks.html" title="Chapter 3. High Level Concept"><link rel="next" href="tu-files.html" title="Chapter 5. Files"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 4. System setup</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tu-howitworks.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="tu-files.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="tu-setup"></a>Chapter 4. System setup</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="tu-setup.html#tu-setup-readonly">4.1. Read-only file system</a></span></dt><dt><span class="section"><a href="tu-setup.html#tu-setup-var">4.2. /var</a></span></dt><dt><span class="section"><a href="tu-setup.html#tu-setup-etc">4.3. /etc</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-setup-readonly"></a>4.1. Read-only file system</h2></div></div></div><p>
 	<span class="emphasis"><em>transactional-update</em></span> is typically used
 	on a read-only root file system, even though it also supports
 	regular read-write systems.
-      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-setup-var"></a>3.2. /var</h2></div></div></div><p>
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-setup-var"></a>4.2. /var</h2></div></div></div><p>
 	On a system with snapshot support
 	<code class="filename">/var</code> should not be part of the
 	root file system, otherwise doing a rollback to a previous state would
 	also roll back the <code class="filename">/var</code>
-	contents. On a read-only system this directory also has be mounted in
-	read-write mode anyway, as several variable data is written into it.
+	contents. On a read-only system this directory has to be writable in any
+	case, variable data is stored inside.
       </p><p>
 	Due to the volatile nature of
 	<code class="filename">/var</code> the directory will
@@ -28,58 +28,120 @@
 	<a class="ulink" href="https://en.opensuse.org/openSUSE:Packaging_for_transactional-updates" target="_top">Packaging for transactional-updates</a>
 	and
 	<a class="ulink" href="https://en.opensuse.org/openSUSE:Packaging_guidelines#Migration_.2F_Upgrades" target="_top">Migration / Upgrade</a>
-	in the Packaging guidelines for more information. If a package is
-	breaking this rule a warning message indicating the affected file is
+	in the Packaging guidelines. If a package is breaking this rule by
+	installing files into a directory which is not part of the root file
+	system, then a warning message indicating the affected file is
 	printed at the end of the
 	<span class="emphasis"><em>transactional-update</em></span> run.
-      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-setup-etc"></a>3.3. /etc</h2></div></div></div><p>
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-setup-etc"></a>4.3. /etc</h2></div></div></div><p>
 	<span class="emphasis"><em>transactional-update</em></span> also supports
-	write support to <code class="filename">/etc</code> on an
+	write operations to <code class="filename">/etc</code> on an
 	otherwise read-only file system. To do so an
 	<span class="emphasis"><em>overlayfs</em></span> layer is put on top of the system's
 	<code class="filename">/etc</code> directory. All modified
 	configuration files will end up in the current snapshot's overlay in
-	<code class="filename">/var/lib/overlay/&lt;snapshotnum&gt;/etc</code>.
+	<code class="filename">/var/lib/overlay/&lt;snapshotnum&gt;/etc</code>,
+	with each snapshot having one associated overlay directory.
       </p><p>
-	Each snapshot will have one associated overlay directory. The overlay
-	directories are mounted using overlay stacking, i.e. the current
-	snapshot will mount its associated overlay as the
-	<code class="option">upperdir</code> and the previous snapshot's overlays as
-	<code class="option">lowerdir</code>. That means that the current snapshot will
-	see all the changes accumulated in the previous snapshots, but older
-	snapshots will not see changes applied to newer snapshots.
+	The mounted <code class="filename">/etc</code> directory will
+	typically consist of three (or more) layers. In
+	<code class="filename">/etc/fstab</code> this may look similar as the following
+	entry:
+	</p><pre class="programlisting">overlay  /etc  overlay  defaults,upperdir=/sysroot/var/lib/overlay/82/etc,lowerdir=/sysroot/var/lib/overlay/81/etc:/sysroot/var/lib/overlay/76/etc:/sysroot/etc,workdir=/sysroot/var/lib/overlay/work-etc,x-systemd.requires-mounts-for=/var,x-systemd.requires-mounts-for=/var/lib/overlay,x-systemd.requires-mounts-for=/sysroot/var,x-systemd.requires-mounts-for=/sysroot/var/lib/overlay,x-initrd.mount  0  0</pre><p>
       </p><p>
-	Let's have a look at an example <code class="filename">fstab</code> entry:
-	</p><pre class="programlisting">overlay  /etc  overlay  defaults,upperdir=/sysroot/var/lib/overlay/83/etc,lowerdir=/sysroot/var/lib/overlay/81/etc:/sysroot/var/lib/overlay/80/etc:/sysroot/var/lib/overlay/77/etc:/sysroot/var/lib/overlay/76/etc:/sysroot/etc,workdir=/sysroot/var/lib/overlay/work-etc,x-systemd.requires-mounts-for=/var,x-systemd.requires-mounts-for=/var/lib/overlay,x-systemd.requires-mounts-for=/sysroot/var,x-systemd.requires-mounts-for=/sysroot/var/lib/overlay,x-initrd.mount  0  0</pre><p>
-      </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
-	We are currently in snapshot <span class="emphasis"><em>83</em></span> as indicated by the
-	<code class="option">upperdir</code> directory. This can be confirmed by typing
-	<span class="command"><strong>snapper list</strong></span> or
-	<span class="command"><strong>btrfs subvolume get-default /</strong></span>. All changes to
-	<code class="filename">/etc</code> will end up in this
-	directory.
-      </p></li><li class="listitem"><p>
-	<code class="option">lowerdir</code> contains several overlays from previous
-	snapshots. In this case it seem the snapshots were not created
-	consecutively - maybe there were a few rollbacks in between or a
-	snapshot wasn't applied by rebooting into it. The lowest snapshot is
-	always <code class="filename">/sysroot/etc</code>, containing
-	the root file system's contents.
-      </p></li><li class="listitem"><p>
+	The important options are <code class="option">upperdir</code> and
+	<code class="option">lowerdir</code>. <code class="option">upperdir</code> references the
+	write layer, i.e. the directory the system is currently writing to. If
+	a file in <code class="filename">/etc</code> is opened for
+	read access, it will first try to open the file from this directory.
+	If the file is not present in this layer, then overlayfs will search
+	in the <code class="option">lowerdir</code>s from left to right until it finds
+	the file, i.e. the layers are <span class="emphasis"><em>transparent</em></span>. The
+	last layer is the reference layer and always has to have a complete
+	copy of <code class="filename">/etc</code>, all the layers
+	above just contain changes to that base layer.
+      </p><div class="example"><a name="id1337"></a><p class="title"><b>Example 4.1. /etc layers</b></p><div class="example-contents"><pre class="programlisting">
+upperdir  (/var/lib/overlay/x/etc)   |       | file2 | file3 | file4 |       |
+lowerdir1 (/var/lib/overlay/x-1/etc) |       |       | file3 |       | file5 | file6
+lowerdir2 (/etc of snapshot x-2)     | file1 | file2 | file3 |       |       | file6
+	</pre><p>
+	  Let's have another look from the perspective while an update is
+	  running. <em class="replaceable"><code>x</code></em> is the id of the new snapshot
+	  where the update is currently being performed.
+	  <em class="replaceable"><code>x-1</code></em> is the id of the currently running
+	  snapshot, and <em class="replaceable"><code>x-2</code></em> is the id of the
+	  snapshot before the currently running one.
+      </p><p>
+	  <code class="filename">file1</code> is an old file that hasn't been
+	  changed in the last two snapshots. Therefore it is only present in the
+	  base / lowest overlay. As the file cannot be found in the first two
+	  layers, the version from the base layer will be used.</p><p><code class="filename">file2</code> has been changed during the update.
+	  The currently running system still sees the old version of the file
+	  from the base layer, the updated system will see the new version of
+	  the file.
+	</p><p>
+	  <code class="filename">file3</code> has been changed during the update,
+	  but there is also a modification in the currently running system. See
+	  the Warning below for details.
+	</p><p>
+	  <code class="filename">file4</code> was only added in the new snapshot
+	  and will only be available there. The currently running system doesn't
+	  know anything about it.
+	</p><p>
+	  <code class="filename">file5</code> was added in the current snapshot.
+	  It will also be visible in the new snapshot.
+	</p><p>
+	  <code class="filename">file6</code> was modified in the current snapshot.
+	  It will also be visible in the new snapshot. Basically the same case
+	  as <code class="filename">file5</code>.
+	</p></div></div><br class="example-break"><p>
+	To reduce the number of overlays the contents of the overlays are
+	merged into the base layer if a new snapshot is created. Caveat:
+	the state of <code class="filename">/etc</code> that is
+	synced into the new snapshot is not the	one from the currently
+	running system, but the previous one: the files in the current
+	system could still be changed before the reboot, and we want these
+	changes (e.g. by the admin or a configuration management software)
+	to be visible in the new system.
+      </p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+	  If a file has been modified both in the new snapshot and in the
+	  currently running system <span class="emphasis"><em>after the snapshot was
+	  created</em></span>, then the changes done in the currently running
+	  system will be lost in the new snapshot (see the
+	  <code class="filename">file3</code> case from the example above).
+	</p><p>
+	  When the new snapshot is booted for the first time the systemd
+	  service <span class="command"><strong>transactional-update-etc-cleaner</strong></span> will
+	  check for these conflicts and print the results to the journal.
+	</p></div><p>
+	If the <code class="option">--continue</code> option is used multiple times to
+        extend a
+	new snapshot while the system has not been rebooted, and if that
+	snapshot is based on the currently active system, then the
+	merge will only run for the first snapshot; the additional
+	snapshot layers will be added to <code class="option">lowerdir</code>. This is
+	to make sure that changes to the running system will still be
+	visible after booting into the new system.
+      </p><p>
+	The above <code class="filename">/etc/fstab</code> example is showing such a
+	case: <code class="option">lowerdir</code> contains two numbered overlay
+	directories. The later directory with number <span class="emphasis"><em>76</em></span>
+	indicates the snapshot which was used as a base. As the
+	<code class="option">lowerdir</code> contains a second entry with number
+	<span class="emphasis"><em>81</em></span> it means that the <code class="option">--continue</code>
+	option has been used before the system was rebooted. Gaps in the
+        numbers such
+	as seen here may indicate that those snapshots were discarded or a
+	rollback to snapshot 76 was performed. The lowest snapshot is always
+	<code class="filename">/sysroot/etc</code>, containing the
+	root file system's contents.
+      </p><p>
 	As <code class="filename">/etc</code> is mounted by
 	<span class="application">dracut</span> during early boot the options have to
 	be prefixed with <span class="emphasis"><em>/sysroot</em></span>. The
-	<span class="command"><strong>x-systemd.</strong></span> options are setting up the volume's
+	<span class="command"><strong>x-systemd</strong></span> options are setting up the volume's
 	<span class="application">systemd</span> dependencies correctly.
-      </p></li></ul></div><p>
-	To prevent the <code class="filename">/etc</code> overlays
-	from growing infinitely they will be synced into the root file system if
-	no snapshot is referencing them any more. So please be aware that the
-	root file system's <code class="filename">/etc</code> state by
-	itself does neither contain the original package contents nor the
-	snapshot's current state. Only the snapshot plus all overlay layers
-	represents the state of <code class="filename">/etc</code>
-	correctly. Overlays no longer needed because they have been merged into
-	all snapshots will be deleted during the <span class="command"><strong>transactional-update
-	cleanup</strong></span> run.
-      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tu-howitworks.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="tu-files.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. Concept </td><td width="20%" align="center"><a accesskey="h" href="transactional-update.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. Files</td></tr></table></div></body></html>
+      </p><p>
+	Overlays no longer referenced by any snapshots will be deleted during
+	the <span class="command"><strong>transactional-update cleanup-overlays</strong></span> run.
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tu-howitworks.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="tu-files.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. High Level Concept </td><td width="20%" align="center"><a accesskey="h" href="transactional-update.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 5. Files</td></tr></table></div></body></html>

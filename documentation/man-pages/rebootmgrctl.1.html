@@ -15,24 +15,28 @@
     h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
       visibility: visible;
     }
-  </style><a href="rebootmgr.index.html">Index </a><span style="float:right">rebootmgr 1.3</span><hr><div class="refentry"><a name="rebootmgrctl.1"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>rebootmgrctl — Tool to control and configure the reboot manager daemon.</p></div><div class="refsynopsisdiv"><a name="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>  [ --help  |   --version ]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   is-active  [--quiet]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   reboot  [ fast  |   now ]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   cancel </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   status  [--quiet]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   set-strategy    best-effort  |   etcd-lock  |   maint-window  |   instantly  |   off  </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   get-strategy </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   set-group   <em class="replaceable"><code>group</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   get-group </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   set-window   <em class="replaceable"><code>time</code></em>   <em class="replaceable"><code>duration</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   get-window </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   set-max  [--group <em class="replaceable"><code>group</code></em>]  <em class="replaceable"><code>number</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   lock  [--group <em class="replaceable"><code>group</code></em>] [<em class="replaceable"><code>machine-id</code></em>]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   unlock  [--group <em class="replaceable"><code>group</code></em>] [<em class="replaceable"><code>machine-id</code></em>]</p></div></div><div class="refsect1"><a name="description"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p><span class="emphasis"><em>rebootmgrctl</em></span> is used to
+  </style><a href="rebootmgr.index.html">Index </a><span style="float:right">rebootmgr 2.2</span><hr><div class="refentry"><a name="rebootmgrctl.1"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>rebootmgrctl — Tool to control and configure the reboot manager daemon.</p></div><div class="refsynopsisdiv"><a name="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>  [ --help  |   --version ]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   is-active  [--quiet]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   reboot  [ fast  |   now ]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   soft-reboot  [ fast  |   now ]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   cancel </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   status  [--quiet]</p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   set-strategy    best-effort  |   maint-window  |   instantly  |   off  </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   get-strategy </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   set-window   <em class="replaceable"><code>time</code></em>   <em class="replaceable"><code>duration</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">rebootmgrctl</code>   get-window </p></div></div><div class="refsect1"><a name="description"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p><span class="emphasis"><em>rebootmgrctl</em></span> is used to
   query and configure the
   <a href="rebootmgrd.8.html"><span class="citerefentry"><span class="refentrytitle">rebootmgrd</span>(8)</span></a>
-  process. Options regarding to <code class="option">etcd-lock</code> are only available if
-  <span class="emphasis"><em>rebootmgrctl</em></span> was compiled with etcd support.</p></div><div class="refsect1"><a name="options"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="--help"><span class="term"><code class="option">--help</code></span><a class="headerlink" title="Permalink to this term" href="#--help">¶</a></dt><dd><p>display help text and exit</p></dd><dt id="--version"><span class="term"><code class="option">--version</code></span><a class="headerlink" title="Permalink to this term" href="#--version">¶</a></dt><dd><p>output version information and exit</p></dd><dt id="cancel"><span class="term"><code class="option">cancel</code></span><a class="headerlink" title="Permalink to this term" href="#cancel">¶</a></dt><dd><p>Cancels an already running reboot.</p></dd><dt id="is-active --quiet"><span class="term"><code class="option">is-active</code> [<span class="optional">--quiet</span>]</span><a class="headerlink" title="Permalink to this term" href="#is-active%20--quiet">¶</a></dt><dd><p>Prints if the rebootmgrd is running and active or not. With the
+  process.</p></div><div class="refsect1"><a name="options"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="--help"><span class="term"><code class="option">--help</code></span><a class="headerlink" title="Permalink to this term" href="#--help">¶</a></dt><dd><p>display help text and exit</p></dd><dt id="--version"><span class="term"><code class="option">--version</code></span><a class="headerlink" title="Permalink to this term" href="#--version">¶</a></dt><dd><p>output version information and exit</p></dd><dt id="cancel"><span class="term"><code class="option">cancel</code></span><a class="headerlink" title="Permalink to this term" href="#cancel">¶</a></dt><dd><p>Cancels an already running reboot.</p></dd><dt id="is-active --quiet"><span class="term"><code class="option">is-active</code> [<span class="optional">--quiet</span>]</span><a class="headerlink" title="Permalink to this term" href="#is-active%20--quiet">¶</a></dt><dd><p>Prints if the rebootmgrd is running and active or not. With the
 	[<span class="optional">--quiet</span>] option,
 	<span class="command"><strong>rebootmgrctl</strong></span> does not print any output, but returns
 	"<code class="literal">0</code>" if <span class="command"><strong>rebootmgrd</strong></span> is running or
 	"<code class="literal">1</code>" if not.</p></dd><dt id="reboot fast|now"><span class="term"><code class="option">reboot</code> [<span class="optional">fast|now</span>]</span><a class="headerlink" title="Permalink to this term" href="#reboot%20fast%7Cnow">¶</a></dt><dd><p>
-	  Tells rebootmgr to schedule a reboot. With
-	  the [<span class="optional">now</span>] option, a forced reboot is done, no lock
-	  from <span class="command"><strong>etcd</strong></span> is requested and a set maintenance
-	  window is ignored. With the [<span class="optional">fast</span>] option, a lock
-	  from <span class="command"><strong>etcd</strong></span> is requested if needed, but a defined
+	  Tells rebootmgrd to schedule a reboot. With
+	  the [<span class="optional">now</span>] option, a forced reboot is done
+	  and a maintenance window is ignored.
+	  With the [<span class="optional">fast</span>] option a defined
 	  maintenance window is ignored.
-	</p></dd><dt id="status --quiet"><span class="term"><code class="option">status</code> [<span class="optional">--quiet</span>]</span><a class="headerlink" title="Permalink to this term" href="#status%20--quiet">¶</a></dt><dd><p>Prints the current status of <span class="command"><strong>rebootmgrd</strong></span>,
-	including current data structure stored in etcd if available. With the
-	[<span class="optional">--quiet</span>] option,
+	</p></dd><dt id="soft-reboot fast|now"><span class="term"><code class="option">soft-reboot</code> [<span class="optional">fast|now</span>]</span><a class="headerlink" title="Permalink to this term" href="#soft-reboot%20fast%7Cnow">¶</a></dt><dd><p>
+	  Tells rebootmgrd to schedule a soft-reboot (see
+	  <a href="https://www.freedesktop.org/software/systemd/man/systemd-soft-reboot.service.html"><span class="citerefentry"><span class="refentrytitle">systemd-soft-reboot.service</span>(8)</span></a>).
+	  With the [<span class="optional">now</span>] option, a forced soft-reboot is
+	  done and a maintenance window is ignored.
+	  With the [<span class="optional">fast</span>] option a defined
+	  maintenance window is ignored.
+	</p></dd><dt id="status --quiet"><span class="term"><code class="option">status</code> [<span class="optional">--quiet</span>]</span><a class="headerlink" title="Permalink to this term" href="#status%20--quiet">¶</a></dt><dd><p>Prints the current status of <span class="command"><strong>rebootmgrd</strong></span>.
+	With the [<span class="optional">--quiet</span>] option,
 	<span class="command"><strong>rebootmgrctl</strong></span> does not print any output, but returns
 	the current reboot status as return value. Valid values are:
 	</p><div class="variablelist"><dl class="variablelist"><dt id="0"><span class="term">0</span><a class="headerlink" title="Permalink to this term" href="#0">¶</a></dt><dd><p>
@@ -41,32 +45,23 @@
 		Reboot requested
 	      </p></dd><dt id="2"><span class="term">2</span><a class="headerlink" title="Permalink to this term" href="#2">¶</a></dt><dd><p>
 		Reboot requested, waiting for maintenance window
-	      </p></dd><dt id="3"><span class="term">3</span><a class="headerlink" title="Permalink to this term" href="#3">¶</a></dt><dd><p>
-		Reboot requested, waiting for etcd lock.
-	      </p></dd></dl></div></dd><dt id="set-strategy best-effort|etcd-lock|maint-window|instantly|off"><span class="term"><code class="option">set-strategy</code> best-effort|etcd-lock|maint-window|instantly|off</span><a class="headerlink" title="Permalink to this term" href="#set-strategy%20best-effort%7Cetcd-lock%7Cmaint-window%7Cinstantly%7Coff">¶</a></dt><dd><p>
+	      </p></dd></dl></div></dd><dt id="set-strategy best-effort|maint-window|instantly|off"><span class="term"><code class="option">set-strategy</code> best-effort|maint-window|instantly|off</span><a class="headerlink" title="Permalink to this term" href="#set-strategy%20best-effort%7Cmaint-window%7Cinstantly%7Coff">¶</a></dt><dd><p>
 	  A new strategy to reboot the machine is set and written into
 	  <code class="filename">/etc/rebootmgr.conf</code>.
 	</p><div class="variablelist"><dl class="variablelist"><dt id="best-effort"><span class="term">best-effort</span><a class="headerlink" title="Permalink to this term" href="#best-effort">¶</a></dt><dd><p>
-		This is the default strategy. If <span class="command"><strong>etcd</strong></span> is
-		running, <code class="option">etcd-lock</code> is used. If no
-		<span class="command"><strong>etcd</strong></span> is running, but a maintenance window
+		This is the default strategy. If a maintenance window
 		is specified, the strategy will be
 		<code class="option">maint-window</code>. If no maintenance window is
 		specified, the machine is immediately rebooted
 		(<code class="option">instantly</code>).
-	      </p></dd><dt id="etcd-lock"><span class="term">etcd-lock</span><a class="headerlink" title="Permalink to this term" href="#etcd-lock">¶</a></dt><dd><p>
-		A lock at <span class="command"><strong>etcd</strong></span> for the specified
-		<code class="option">lock-group</code> will be acquired before reboot. If
-		a maintenance window is specified, the lock is only acquired
-		during this window.
 	      </p></dd><dt id="maint-window"><span class="term">maint-window</span><a class="headerlink" title="Permalink to this term" href="#maint-window">¶</a></dt><dd><p>
 		Reboot does happen only during a specified maintenance
 		window. If no window is specified, the
 		<code class="option">instantly</code> strategy is followed.
 	      </p></dd><dt id="instantly"><span class="term">instantly</span><a class="headerlink" title="Permalink to this term" href="#instantly">¶</a></dt><dd><p>
 		Other services will be informed that a reboot will
-		happen. Reboot will be done without getting any locks or
-		waiting for a maintenance window.
+		happen. Reboot will be done without waiting for a
+		maintenance window.
 	      </p></dd><dt id="off"><span class="term">off</span><a class="headerlink" title="Permalink to this term" href="#off">¶</a></dt><dd><p>
 		Reboot requests are temporary
 		ignored. <code class="filename">/etc/rebootmgr.conf</code> is not
@@ -78,46 +73,12 @@
       duration"><span class="term"><code class="option">set-window</code> <em class="replaceable"><code>time</code></em>
       <em class="replaceable"><code>duration</code></em></span><a class="headerlink" title="Permalink to this term" href="#set-window%20time%0A%20%20%20%20%20%20duration">¶</a></dt><dd><p>
 	  Set's the maintenance window. The format of <code class="varname">time</code>
-	  is the same as described in  <a href="https://www.freedesktop.org/software/systemd/man/systemd.time.html"><span class="citerefentry"><span class="refentrytitle">systemd.time</span>(7)</span></a>.
+	  is a calendar event described in <a href="https://www.freedesktop.org/software/systemd/man/systemd.time.html"><span class="citerefentry"><span class="refentrytitle">systemd.time</span>(7)</span></a>.
 	  The format of <code class="varname">duration</code> is
           "<code class="literal">[XXh][YYm]</code>".
 	</p></dd><dt id="get-window"><span class="term"><code class="option">get-window</code></span><a class="headerlink" title="Permalink to this term" href="#get-window">¶</a></dt><dd><p>
 	  The currently set maintenance window will be printed.
-	</p></dd><dt id="set-group
-      etcd-lock-group"><span class="term"><code class="option">set-group</code>
-      <em class="replaceable"><code>etcd-lock-group</code></em></span><a class="headerlink" title="Permalink to this term" href="#set-group%0A%20%20%20%20%20%20etcd-lock-group">¶</a></dt><dd><p>
-	  Set's the group, to which this machine belongs to get a reboot lock
-	  from <span class="command"><strong>etcd</strong></span>.
-	</p></dd><dt id="get-group"><span class="term"><code class="option">get-group</code></span><a class="headerlink" title="Permalink to this term" href="#get-group">¶</a></dt><dd><p>
-	  The currently set lock group for <span class="command"><strong>etcd</strong></span>.
-	</p></dd><dt id="set-max
-      --group group
-      number"><span class="term"><code class="option">set-max</code>
-      [<span class="optional">--group <em class="replaceable"><code>group</code></em></span>]
-      <em class="replaceable"><code>number</code></em></span><a class="headerlink" title="Permalink to this term" href="#set-max%0A%20%20%20%20%20%20--group%20group%0A%20%20%20%20%20%20number">¶</a></dt><dd><p>
-	  Set the maximal number of hosts in a group, which are allowed to
-	  reboot at the same time.
-	</p></dd><dt id="lock
-      --group group
-      machine-id"><span class="term"><code class="option">lock</code>
-      [<span class="optional">--group <em class="replaceable"><code>group</code></em></span>]
-      [<span class="optional"><em class="replaceable"><code>machine-id</code></em></span>]</span><a class="headerlink" title="Permalink to this term" href="#lock%0A%20%20%20%20%20%20--group%20group%0A%20%20%20%20%20%20machine-id">¶</a></dt><dd><p>
-	  Lock a machine. If no <code class="varname">group</code> is specified, the
-	  local default group will be used. If no
-	  <code class="varname">machine-id</code> is specified, the local machine will
-	  be locked.
-	</p><p>
-	  The machine-id is a network wide, unique ID. Per default the ID from
-	  <code class="filename">/etc/machine-id</code> is used.
-	</p></dd><dt id="unlock
-      --group group
-      machine-id"><span class="term"><code class="option">unlock</code>
-      [<span class="optional">--group <em class="replaceable"><code>group</code></em></span>]
-      [<span class="optional"><em class="replaceable"><code>machine-id</code></em></span>]</span><a class="headerlink" title="Permalink to this term" href="#unlock%0A%20%20%20%20%20%20--group%20group%0A%20%20%20%20%20%20machine-id">¶</a></dt><dd><p>
-	  Unlock a machine. If no <code class="varname">group</code> is specified, the
-	  local default group will be used. If no
-	  <code class="varname">machine-id</code> is specified, the local machine will
-	  be unlocked.
 	</p></dd></dl></div></div><div class="refsect1"><a name="see_also"></a><h2 id="See Also">See Also<a class="headerlink" title="Permalink to this headline" href="#See%20Also">¶</a></h2><p>
-      <a href="https://www.freedesktop.org/software/systemd/man/systemd.time.html"><span class="citerefentry"><span class="refentrytitle">systemd.time</span>(7)</span></a>
+      <a href="https://www.freedesktop.org/software/systemd/man/systemd.time.html"><span class="citerefentry"><span class="refentrytitle">systemd.time</span>(7)</span></a>,
+      <a href="https://www.freedesktop.org/software/systemd/man/systemd-soft-reboot.service.html"><span class="citerefentry"><span class="refentrytitle">systemd-soft-reboot.service</span>(8)</span></a>
     </p></div></div></body></html>

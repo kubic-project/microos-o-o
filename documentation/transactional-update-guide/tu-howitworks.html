@@ -1,58 +1,53 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 2. Concept</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="transactional-update.html" title="The Transactional Update Guide"><link rel="up" href="transactional-update.html" title="The Transactional Update Guide"><link rel="prev" href="tu-introduction.html" title="Chapter 1. Introduction"><link rel="next" href="tu-setup.html" title="Chapter 3. System setup"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 2. Concept</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tu-introduction.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="tu-setup.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="tu-howitworks"></a>Chapter 2. Concept</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="tu-howitworks.html#tu-concept">2.1. Filesystem</a></span></dt><dt><span class="section"><a href="tu-howitworks.html#tu-howitworks-chroot">2.2. Updating the correct snapshot</a></span></dt><dt><span class="section"><a href="tu-howitworks.html#tu-howitworks-example">2.3. Workflow</a></span></dt><dt><span class="section"><a href="tu-howitworks.html#tu-howitworks-simplified">2.4. Simplified workflow</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-concept"></a>2.1. Filesystem</h2></div></div></div><p>
-	This chapter describes the handling of the root file system, i.e. the
-	core functionality of
-	<span class="emphasis"><em>transactional-update</em></span>. Of course not
-	all information (such as
-	<code class="filename">/var</code> or
-	<code class="filename">/home</code>) should be stored on the
-	root volume, see <a class="xref" href="tu-setup.html" title="Chapter 3. System setup">Chapter 3, <i>System setup</i></a> for a real world setup.
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 3. High Level Concept</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="transactional-update.html" title="The Transactional Update Guide"><link rel="up" href="transactional-update.html" title="The Transactional Update Guide"><link rel="prev" href="tu-components.html" title="Chapter 2. Components"><link rel="next" href="tu-setup.html" title="Chapter 4. System setup"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 3. High Level Concept</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tu-components.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="tu-setup.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="tu-howitworks"></a>Chapter 3. High Level Concept</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="tu-howitworks.html#tu-concept">3.1. The root file system</a></span></dt><dt><span class="section"><a href="tu-howitworks.html#tu-howitworks-chroot">3.2. Updating the correct snapshot</a></span></dt><dt><span class="section"><a href="tu-howitworks.html#tu-howitworks-example">3.3. Workflow</a></span></dt><dt><span class="section"><a href="tu-howitworks.html#tu-howitworks-simplified">3.4. Simplified workflow</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-concept"></a>3.1. The root file system</h2></div></div></div><p>
+	This chapter describes the handling of the root file system. In general
+	<span class="emphasis"><em>transactional-update</em></span> will not modify any
+	other subvolumes or file systems: Information stored on these mounts
+	(such as <code class="filename">/var</code> or
+	<code class="filename">/home</code>) is usually not supposed
+	to be rolled back. See <a class="xref" href="tu-setup.html" title="Chapter 4. System setup">Chapter 4, <i>System setup</i></a> for a real world
+	setup.
+	There are exceptions for a few dedicated subvolumes such as
+	<code class="filename">/boot/grub2/x86_64-efi</code> which
+	also have to be available to be	able to update the bootloader; these
+	directories will be bind mounted into the update environment.
       </p><p>
 	<span class="emphasis"><em>transactional-update</em></span> is based around
 	several concepts of the <span class="emphasis"><em>Btrfs</em></span> file system, a
 	general purpose Copy-on-Write (Cow) filesystem with snapshot and
-	subvolume support.
-	Subvolumes look like a directory, but behave like a mount point. They
-	can be accessed from the parent subvolume like a directory, or they can
-	be mounted on other directories of the same filesytem.
-	Snapshots will be created from existing subvolumes, excluding other
-	subvolumes inside of it, and are read-only by default.
-      </p><p>
-	Implementation note: <span class="emphasis"><em>transactional-update</em></span>
-	may also be implemented for any other file system as long as it provides
-	snapshot functionality and the ability to boot from snapshots. See
-	<a class="xref" href="tu-porting.html" title="Chapter 5. Porting to other systems">Chapter 5, <i>Porting to other systems</i></a> for requirements and porting information.
-      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-howitworks-chroot"></a>2.2. Updating the correct snapshot</h2></div></div></div><p>
-	transactional-update is using <span class="emphasis"><em>zypper</em></span> with the
-	<code class="option">--root</code>	option pointing to the new snapshot for package
-	management. Other commands (such as the creation of initrd) will be
-	called with <span class="command"><strong>chroot</strong></span>.
-      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-howitworks-example"></a>2.3. Workflow</h2></div></div></div><div class="mediaobject"><img src="../png/Workflow-Start.png" alt="List of snapshots"><div class="caption"><p>
-	    At the beginning, there is a list of old snapshots, each one based
-	    on the other one, and the newest one is the current root filesystem.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step1.png" alt="List of snapshots with new read-only Clone of current root filesystem"><div class="caption"><p>
-	    In the first step, a new read-only snapshot of the current root
-	    filesystem will be created.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step2.png" alt="List of snapshots with a read-write Clone of current root filesystem"><div class="caption"><p>
-	    In the second step we switch the snapshot from read-only to
-	    read-write, so that we can update it.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step3.png" alt="List of snapshots with a read-write Clone of current root filesystem, which will be updated with zypper."><div class="caption"><p>
-	    In the third step the snapshot will be updated. This can be
+	subvolume support, though support for other file systems is possible
+	(see <a class="xref" href="tu-porting.html" title="Chapter 6. Porting to other systems">Chapter 6, <i>Porting to other systems</i></a> for requirements and porting
+	information).
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-howitworks-chroot"></a>3.2. Updating the correct snapshot</h2></div></div></div><p>
+	transactional-update is wrapping all binaries which will modify the
+	file system with <span class="command"><strong>tukit</strong></span>, which will in turn use
+	<span class="command"><strong>chroot</strong></span> to execute the command in the new snapshot.
+	That way e.g. <span class="emphasis"><em>zypper</em></span> will install packages
+	into the new snapshot only.
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-howitworks-example"></a>3.3. Workflow</h2></div></div></div><div class="mediaobject"><img src="../png/Workflow-Start.png" alt="List of snapshots"><div class="caption"><p>
+	    In the beginning there is a list of old snapshots, each one based
+	    on the previous one, and the newest one is the current root
+	    file system.
+	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step2.png" alt="List of snapshots with a read-write clone of the current root file system."><div class="caption"><p>
+	    In the first step, a new snapshot of the current root
+	    file system will be created. This snapshot is set read write.
+	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step3.png" alt="List of snapshots with a read-write clone of current root file system, which will be updated with zypper."><div class="caption"><p>
+	    In the second step the snapshot will be updated. This can be
 	    <span class="emphasis"><em>zypper up</em></span> or <span class="emphasis"><em>zypper dup</em></span>,
 	    the installation or removal of a package or any other modification
 	    to the root file system.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step4.png" alt="List of snapshots with the clone again read-only."><div class="caption"><p>
-	    In the fourth step the snapshot will be changed back to read-only,
+	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step4.png" alt="List of snapshots with the clone set read-only."><div class="caption"><p>
+	    In the third step the snapshot will be changed back to read-only,
 	    so that the data cannot be modified anymore.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step5.png" alt="List of snapshots with the read-only Clone the new default."><div class="caption"><p>
+	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Step5.png" alt="List of snapshots with the read-only clone set as the new default."><div class="caption"><p>
 	    The last step is to mark the updated snapshot as new root
-	    filesystem. This is the atomic step: If the power would have
+	    file system. This is the atomic step: If the power would have
 	    been pulled before, the unchanged old system would have been
 	    booted. Now the new, updated system will boot.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-After-Reboot.png" alt="List of snapshots with the current root filesystem as newest at the end."><div class="caption"><p>
+	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-After-Reboot.png" alt="List of snapshots with the current root file system as newest at the end."><div class="caption"><p>
 	    After reboot, the newly prepared snapshot is the new root
-	    filesystem. In case anything goes wrong a rollback to any of
+	    file system. In case anything goes wrong a rollback to any of
 	    the older snapshots can be performed.
-	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Without-Reboot.png" alt="List of snapshots with a read-write Clone of current root filesystem, which will be updated with zypper."><div class="caption"><p>
+	  </p></div></div><div class="mediaobject"><img src="../png/Workflow-Without-Reboot.png" alt="List of snapshots with a read-write clone of current root filesystem, which will be updated with zypper."><div class="caption"><p>
 	    If the system is not rebooted and
 	    <span class="emphasis"><em>transactional-update</em></span> is called again a new
 	    snapshot will be created and updated. This new snapshot is based
@@ -60,14 +55,14 @@
 	    <span class="emphasis"><em>not</em></span> on the new default snapshot!
 	    For stacking changes (i.e. if several commands are supposed to be
 	    combined in one single snapshot) the <code class="option">shell</code> command
-	    can be used to perform any number of operations.
-	  </p></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-howitworks-simplified"></a>2.4. Simplified workflow</h2></div></div></div><p>
+	    can be used to perform any number of operations, or the
+	    <code class="option">--continue</code> can be used to continue the latest
+	    snapshot while preserving a separate snapshot for each step.
+	  </p></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-howitworks-simplified"></a>3.4. Simplified workflow</h2></div></div></div><p>
 	In essence the logic of transactional-update can be summarized as
 	follows:
       </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><pre class="programlisting">
-SNAPSHOT_ID=`snapper create -p -d "Snapshot Update"`
-	  </pre></li><li class="listitem"><pre class="programlisting">
-btrfs property set ${SNAPSHOT_DIR} ro false
+SNAPSHOT_ID=`snapper create --read-write -p -d "Snapshot Update"`
 	  </pre></li><li class="listitem"><pre class="programlisting">
 zypper -R ${SNAPSHOT_DIR} up|patch|dup|...
 	  </pre></li><li class="listitem"><pre class="programlisting">
@@ -76,4 +71,4 @@ btrfs property set ${SNAPSHOT_DIR} ro true
 btrfs subvol set-default ${SNAPSHOT_DIR}
 	  </pre></li><li class="listitem"><pre class="programlisting">
 systemctl reboot
-	  </pre></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tu-introduction.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="tu-setup.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 1. Introduction </td><td width="20%" align="center"><a accesskey="h" href="transactional-update.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 3. System setup</td></tr></table></div></body></html>
+	  </pre></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tu-components.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="tu-setup.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. Components </td><td width="20%" align="center"><a accesskey="h" href="transactional-update.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. System setup</td></tr></table></div></body></html>

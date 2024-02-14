@@ -1,0 +1,45 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 2. Components</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="transactional-update.html" title="The Transactional Update Guide"><link rel="up" href="transactional-update.html" title="The Transactional Update Guide"><link rel="prev" href="tu-introduction.html" title="Chapter 1. Introduction"><link rel="next" href="tu-howitworks.html" title="Chapter 3. High Level Concept"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 2. Components</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tu-introduction.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="tu-howitworks.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="tu-components"></a>Chapter 2. Components</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="tu-components.html#tu-libtukit">2.1. libtukit.so</a></span></dt><dt><span class="section"><a href="tu-components.html#tu-tukit">2.2. tukit</a></span></dt><dt><span class="section"><a href="tu-components.html#tu-tukitd">2.3. D-Bus Bindings</a></span></dt><dt><span class="section"><a href="tu-components.html#tu-transactional-update">2.4. transactional-update</a></span></dt></dl></div><p>
+	transactional-update is split into two parts: the (open)SUSE specific
+	<span class="emphasis"><em>transactional-update</em></span> shell script, and the
+	generic <span class="emphasis"><em>tukit</em></span> (including libtukit, the tukit
+	command line application and the D-Bus bindings).
+    </p><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-libtukit"></a>2.1. libtukit.so</h2></div></div></div><p>
+	libtukit is a C++ library implementing the core functionality of
+	<span class="emphasis"><em>transactional-update</em></span>. It is responsible
+	for snapshot management, preparing the environment (including
+	overlay handling, see <a class="xref" href="tu-setup.html#tu-setup-etc" title="4.3. /etc">Section 4.3, “/etc”</a>) and executing
+	the command to run within the update environment.
+      </p><p>
+	The library is designed to be a general purpose library for handling
+	transactional systems. It provides methods to create, modify and close
+	transactions as well as execute commands within a transaction.
+	Currently <span class="emphasis"><em>snapper</em></span> is the only implemented snapshot
+	management option.
+      </p><p>
+	Applications such as package managers are expected to use this library
+	for easily supporting transactional systems. DNF for example is
+	supporting transactional systems via the
+	<a class="ulink" href="https://code.opensuse.org/microos/libdnf-plugin-txnupd" target="_top">libdnf-plugin-txnupd</a>
+	plugin.
+      </p><p>
+	The library also provides C bindings with the same functionality as the
+	C++ library.
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-tukit"></a>2.2. tukit</h2></div></div></div><p>
+	tukit is a utility application to call <span class="emphasis"><em>libtukit</em></span>
+	functionality from the command line. Applications which do not support
+	<span class="emphasis"><em>libtukit</em></span> directly may use this application as
+	a wrapper. This command is not yet intended to be called by the user
+	directly, as it does not perform maintenance tasks such as marking a
+	snapshot for deletion for now.
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-tukitd"></a>2.3. D-Bus Bindings</h2></div></div></div><p>
+	The <span class="emphasis"><em>libtukit</em></span> functionality is also available via
+	D-Bus interface <span class="emphasis"><em>org.opensuse.tukit</em></span>. Commands are
+	executed asynchronously, returning a signal when the command execution
+	is finished.
+      </p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tu-transactional-update"></a>2.4. transactional-update</h2></div></div></div><p>
+	This shell script is an (open)SUSE specific wrapper for handling the
+	tasks typical on a transactional system, e.g. installing packages,
+	updating the system or updating the bootloader. To do so it is using
+	the tukit wrapper to call applications such as
+	<span class="emphasis"><em>zypper</em></span> for package management.
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tu-introduction.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="tu-howitworks.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 1. Introduction </td><td width="20%" align="center"><a accesskey="h" href="transactional-update.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 3. High Level Concept</td></tr></table></div></body></html>

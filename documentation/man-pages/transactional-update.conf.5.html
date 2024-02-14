@@ -15,11 +15,22 @@
     h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
       visibility: visible;
     }
-  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 2.24.1</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="transactional-update.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>transactional-update.conf — transactional-update configuration file</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><p>/etc/transactional-update.conf</p></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>This configuration file controls and defines the behaviour of
-    <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.8.html"><span class="citerefentry"><span class="refentrytitle">transactional-update</span>(8)</span></a>.</p><p>The transactional-update.conf file uses shell
+  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.5.0</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="transactional-update.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>transactional-update.conf — transactional-update configuration files</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="literallayout"><p><br>
+/etc/transactional-update.conf<br>
+/usr/etc/transactional-update.conf<br>
+/usr/etc/transactional-update.conf.d/*<br>
+    </p></div></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>These configuration files control and define the behaviour of
+    <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.8.html"><span class="citerefentry"><span class="refentrytitle">transactional-update</span>(8)</span></a>.</p><p>The configuration files use shell
     style assignments, e.g. <code class="code">PARAMETER=value</code>.</p><p>A reference file (also used for reading the default values) can be
     found in
-    /usr/etc/transactional-update.conf.</p></div><div class="refsect1"><a name="id-1.6"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><p>The following options are available in the
+    /usr/etc/transactional-update.conf.
+    Additionally packages may overwrite these default values by putting
+    files into
+    /usr/etc/transactional-update.conf.d/;
+    files in that directory will be read alphabetically, assignments in later
+    files will overwrite previous assignments. Admin settings in
+    /etc/transactional-update.conf will
+    have the highest precedence.</p></div><div class="refsect1"><a name="id-1.6"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><p>The following options are available in the
       "<code class="literal">transactional-update</code>" section:
     </p><div class="variablelist"><dl class="variablelist"><dt id="REBOOT_METHOD"><span class="term"><code class="varname">REBOOT_METHOD</code></span><a class="headerlink" title="Permalink to this term" href="#REBOOT_METHOD">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Specify the reboot method to use.</p><div class="variablelist"><dl class="variablelist"><dt id="auto"><span class="term">"<code class="literal">auto</code>"</span><a class="headerlink" title="Permalink to this term" href="#auto">¶</a></dt><dd><p>
                   Uses "<code class="literal">rebootmgr</code>" if available and active;
@@ -39,15 +50,18 @@
                   Will use kexec to reboot the system; this will skip hardware
                   initialization and thus boot faster than
                   "<code class="literal">systemd</code>".
+                </p></dd><dt id="notify"><span class="term">"<code class="literal">notify</code>"</span><a class="headerlink" title="Permalink to this term" href="#notify">¶</a></dt><dd><p>
+                  Trigger the <span class="application">Transactional Update
+                  Notifier</span> to inform the user about the
+                  necessary reboot.
                 </p></dd><dt id="none"><span class="term">"<code class="literal">none</code>"</span><a class="headerlink" title="Permalink to this term" href="#none">¶</a></dt><dd><p>
                   Ignores any reboot request, the user has to reboot the
                   machine manually or by other means.
                 </p></dd></dl></div></dd><dt id="UPDATE_METHOD"><span class="term"><code class="varname">UPDATE_METHOD</code></span><a class="headerlink" title="Permalink to this term" href="#UPDATE_METHOD">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
 	    Specify the zypper update method to use. This value is used for
-	    <a href="transactional-update.service.8.html"><span class="citerefentry"><span class="refentrytitle">transactional-update.service</span>(8)</span></a>.
-          </p></dd><dt id="UPDATE_METHOD1"><span class="term"><code class="varname">UPDATE_METHOD</code></span><a class="headerlink" title="Permalink to this term" href="#UPDATE_METHOD1">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
-	    Specify the zypper update method to use. This value is used for
-	    <a href="transactional-update.service.8.html"><span class="citerefentry"><span class="refentrytitle">transactional-update.service</span>(8)</span></a>.
+	    <a href="transactional-update.service.8.html"><span class="citerefentry"><span class="refentrytitle">transactional-update.service</span>(8)</span></a>
+	    and in case no command is specified when calling
+	    "<code class="literal">transactional-update</code>".
 	  </p><div class="variablelist"><dl class="variablelist"><dt id="dup"><span class="term">"<code class="literal">dup</code>"</span><a class="headerlink" title="Permalink to this term" href="#dup">¶</a></dt><dd><p>
                   Uses "<code class="literal">zypper dup</code>" for updating the system;
                   use this on rolling release distributions like openSUSE

@@ -15,7 +15,7 @@
     h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
       visibility: visible;
     }
-  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 2.24.1</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="transactional-update.8"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>transactional-update, transactional-update.service, transactional-update.timer — Apply updates to the system in an atomic way via transactional
+  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.5.0</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="transactional-update.8"></a><div class="titlepage"></div><div class="refnamediv"><a name="name"></a><h2>Name</h2><p>transactional-update, transactional-update.service, transactional-update.timer — Apply updates to the system in an atomic way via transactional
     updates.</p></div><div class="refsynopsisdiv"><a name="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">transactional-update</code>  [<em class="replaceable"><code>options</code></em>...] [<em class="replaceable"><code>general-command</code></em>...] [<em class="replaceable"><code>package-command</code></em>
          [<em class="replaceable"><code>command-argument</code></em>...]
       ]</p></div><div class="cmdsynopsis"><p><code class="command">transactional-update</code>  [<em class="replaceable"><code>options</code></em>...]  <em class="replaceable"><code>standalone-command</code></em> </p></div><p>transactional-update.service</p><p>transactional-update.timer</p></div><div class="refsect1"><a name="description"></a><h2 id="DESCRIPTION">DESCRIPTION<a class="headerlink" title="Permalink to this headline" href="#DESCRIPTION">¶</a></h2><p><span class="command"><strong>transactional-update</strong></span> updates the system
@@ -48,12 +48,12 @@ corresponding /etc overlay located in
 /var/lib/overlay. As configuration files
 may be modified after a snapshot was created and before a reboot is performed
 (e.g. via configuration management software) the overlay file system will use
-multiple lower layers, i.e. changes in older layers will be visible in newer
-snapshots, but not vice versa. To keep the number of layers at a minimum and the
-amount of data stored in the overlays low the
-/etc state of the oldest still available
-snapshot is synchronized into the new root file system; unused overlays will be
-removed at a later time (see the <code class="option">cleanup</code> option).
+multiple lower layers, i.e. configuration file changes applied to the currently
+running system will be visible in the new system, but not vice versa. To keep
+the number of layers at a minimum the
+/etc state of the previous snapshot is
+synchronized into the new root file system; unused overlays will be
+removed at a later time (see the <code class="option">cleanup-overlays</code> option).
 </p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3>
 If a file in /etc has been changed
 during the update and is <span class="emphasis"><em>also</em></span> changed in the running
@@ -80,21 +80,41 @@ in regular intervals. The specific time can be configured in
 <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html"><span class="citerefentry"><span class="refentrytitle">systemd.unit</span>(5)</span></a>
 for more information.
 </p></div><div class="refsect1"><a name="commands"></a><h2 id="COMMANDS">COMMANDS<a class="headerlink" title="Permalink to this headline" href="#COMMANDS">¶</a></h2><p>
-  If none of the following commands is given <code class="option">up</code> will be
-  assumed.
+  If none of the following commands is given, the value of
+  <code class="option">UPDATE_METHOD</code> in
+  <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.conf.5.html"><span class="citerefentry"><span class="refentrytitle">transactional-update.conf</span>(5)</span></a>
+  will be assumed.
 </p><div class="refsect2"><a name="general_commands"></a><h3 id="General Commands">General Commands<a class="headerlink" title="Permalink to this headline" href="#General%20Commands">¶</a></h3><p>
   General Commands can be used together in any combination; additionally they
   can be extended with one <a class="link" href="#pkg_commands" title="Package Commands">Package Command</a>.
   The order of the General Commands doesn't matter.
-</p><div class="variablelist"><dl class="variablelist"><dt id="cleanup"><span class="term"><code class="option">cleanup</code></span><a class="headerlink" title="Permalink to this term" href="#cleanup">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>If the current root filesystem is identical to the active root
+</p><div class="variablelist"><dl class="variablelist"><dt id="apply"><span class="term"><code class="option">apply</code></span><a class="headerlink" title="Permalink to this term" href="#apply">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+      Mounts /usr,
+      /etc and
+      /boot of the (new) default
+      snapshot into the currently running system. This is mostly useful for
+      using newly installed packages directly without a reboot. When using
+      apply on a system where existing files will be replaced (e.g. when doing
+      a system update) this behaves similarly to a regular zypper update where
+      files of currently running applications will also be replaced, but with
+      the additional advantage that the update itself was finished successfully
+      as a whole, avoiding inconsistent states on update failures.
+      </p><p>
+      Note that - in contrast to regular zypper updates - services will not be
+      restarted automatically. Additionally mounting the three directories is
+      not one atomic operation, so there will be a short timespan where the
+      directories visible to the system will not be in sync.
+      </p></dd><dt id="cleanup"><span class="term"><code class="option">cleanup</code></span><a class="headerlink" title="Permalink to this term" href="#cleanup">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Identical to calling both <code class="option">cleanup-snapshots</code> and
+      <code class="option">cleanup-overlays</code>.
+      </p></dd><dt id="cleanup-snapshots"><span class="term"><code class="option">cleanup-snapshots</code></span><a class="headerlink" title="Permalink to this term" href="#cleanup-snapshots">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>If the current root filesystem is identical to the active root
       filesystem (means after a reboot, before
       <span class="command"><strong>transactional-update</strong></span> creates a new snapshot with
       updates), all old snapshots without a cleanup algorithm get a cleanup
       algorithm set. This is to make sure, that old snapshots will be deleted
       by snapper. See the section about cleanup algorithms in
       <a href="http://snapper.io/manpages/snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>.
-      </p><p>
-	Also removes all unreferenced (and thus unused)
+      </p></dd><dt id="cleanup-overlays"><span class="term"><code class="option">cleanup-overlays</code></span><a class="headerlink" title="Permalink to this term" href="#cleanup-overlays">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+	Removes all unreferenced (and thus unused)
 	/etc overlay directories in
 	/var/lib/overlay.
       </p></dd><dt id="grub.cfg"><span class="term"><code class="option">grub.cfg</code></span><a class="headerlink" title="Permalink to this term" href="#grub.cfg">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
@@ -121,11 +141,48 @@ for more information.
       </p></dd><dt id="run cmd"><span class="term"><code class="option">run</code> <em class="replaceable"><code>cmd</code></em></span><a class="headerlink" title="Permalink to this term" href="#run%20cmd">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
 	Execute the the command <em class="replaceable"><code>cmd</code></em> inside
 	a new snapshot. By default this snaphot will remain, but if
-	<code class="option">--drop-if-no-chage</code> is set, the new snapshot
+	<code class="option">--drop-if-no-change</code> is set, the new snapshot
 	will be dropped if there is no change in the file system.
       </p><p>
 	This command consumes all the remaining parameters, so should
-	be placed the in the last position.
+	be placed in the last position.
+      </p><p>
+	To use features like command lists (e.g. pipes or separators) wrap the
+	script into a Shell command like such as
+	</p><pre class="programlisting">
+	  transactional-update run bash -c '
+	    ls &amp;&amp; date
+	    if [ true ]; then
+	      echo -n "Hello "
+	      echo '\''world'\''
+	    fi
+	  '
+	</pre><p>
+      </p></dd><dt id="setup-fips"><span class="term"><code class="option">setup-fips</code></span><a class="headerlink" title="Permalink to this term" href="#setup-fips">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+	Install the FIPS pattern package and configure the kernel command
+	line parameter to activate FIPS mode.
+      </p><p>
+	This command can not be combined with any
+	<a class="link" href="#pkg_commands" title="Package Commands">Package Command</a> other than
+	<code class="option">install</code>.
+      </p></dd><dt id="setup-kdump --crashkernel=low,high"><span class="term"><code class="option">setup-kdump</code> [<span class="optional">--crashkernel=<em class="replaceable"><code>low</code></em>,<em class="replaceable"><code>high</code></em></span>]</span><a class="headerlink" title="Permalink to this term" href="#setup-kdump%20--crashkernel=low,high">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+	Sets up kdump on the system; if no <code class="option">--crashkernel</code>
+	option is specified then it will use the values determined by
+	<span class="command"><strong>kdumptool calibrate</strong></span>, otherwise the values of
+	<em class="replaceable"><code>low</code></em> and <em class="replaceable"><code>high</code></em>
+	(numbers in Megabytes) will be used for the corresponding
+	<span class="command"><strong>crashkernel</strong></span> kernel parameters.
+      </p><p>
+	This command can not be combined with any
+	<a class="link" href="#pkg_commands" title="Package Commands">Package Command</a> other than
+	<code class="option">install</code>.
+      </p></dd><dt id="setup-selinux"><span class="term"><code class="option">setup-selinux</code></span><a class="headerlink" title="Permalink to this term" href="#setup-selinux">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+	Sets up a SELinux system: Installs the default SELinux "Targeted
+	policy" and enables it.
+      </p><p>
+	This command can not be combined with any
+	<a class="link" href="#pkg_commands" title="Package Commands">Package Command</a> other than
+	<code class="option">install</code>.
       </p></dd><dt id="shell"><span class="term"><code class="option">shell</code></span><a class="headerlink" title="Permalink to this term" href="#shell">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
 	Opens a shell to execute commands like zypper manually.
 	After all actions are done, before the snapshot with the changes is
@@ -149,12 +206,12 @@ for more information.
   updated; if combined with
   <a class="link" href="#general_commands" title="General Commands">General Commands</a> those will not be
   executed any more in that case.
-</p><div class="refsect3"><a name="ni_pkg_commands"></a><h4>Non-interactive Package Commands</h4><div class="variablelist"><dl class="variablelist"><dt id="dup"><span class="term"><code class="option">dup</code></span><a class="headerlink" title="Permalink to this term" href="#dup">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+</p><div class="refsect3"><a name="ni_pkg_commands"></a><h4>Non-interactive Package Commands</h4><div class="variablelist"><dl class="variablelist"><dt id="dist-upgrade"><span class="term"><code class="option">dist-upgrade</code>, </span><span class="term"><code class="option">dup</code></span><a class="headerlink" title="Permalink to this term" href="#dist-upgrade">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
 	If new updates are available, a new snapshot is created and
 	<span class="command"><strong>zypper dup --no-allow-vendor-change</strong></span> is used to
 	update the snapshot. Afterwards, the snapshot is activated and will be
 	used as the new root filesystem during next boot.
-      </p></dd><dt id="up"><span class="term"><code class="option">up</code></span><a class="headerlink" title="Permalink to this term" href="#up">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+      </p></dd><dt id="update"><span class="term"><code class="option">update</code>, </span><span class="term"><code class="option">up</code></span><a class="headerlink" title="Permalink to this term" href="#update">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
 	If new updates are available, a new snapshot is created and
 	<span class="command"><strong>zypper up</strong></span> is used to update the snapshot.
 	Afterwards, the snapshot is activated and will be used as the new root
@@ -164,6 +221,18 @@ for more information.
 	<span class="command"><strong>zypper patch</strong></span> is used to update the snapshot.
 	Afterwards, the snapshot is activated and will be used as the new root
 	filesystem during next boot.
+      </p></dd><dt id="register arguments"><span class="term"><code class="option">register</code> <em class="replaceable"><code>arguments</code></em></span><a class="headerlink" title="Permalink to this term" href="#register%20arguments">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
+        Register a (commercial) system. This is a simple wrapper for
+        <span class="command"><strong>SUSEConnect</strong></span>, as some commands may require access
+        to the root file system (e.g. to add a new key to the RPM database).
+        Any arguments will just be forwarded to <span class="command"><strong>SUSEConnect</strong></span>.
+      </p><p>
+        This command implies the <code class="option">--drop-if-no-change</code> option
+        to avoid creation of unnecessary snapshots, as many of the
+        <span class="command"><strong>SUSEConnect</strong></span> options are read-only or only require
+        access to /etc.
+      </p><p>
+        <span class="command"><strong>SUSEConnect</strong></span> is always a non-interactive command.
       </p></dd></dl></div></div><div class="refsect3"><a name="i_pkg_commands"></a><h4>Interactive Package Commands</h4><div class="variablelist"><dl class="variablelist"><dt id="migration"><span class="term"><code class="option">migration</code></span><a class="headerlink" title="Permalink to this term" href="#migration">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
 	On systems which are registered against the SUSE Customer Center (SCC)
 	or SMT, a migration to a new version of the installed products can be
@@ -186,7 +255,7 @@ for more information.
               See the <code class="option">remove</code> description in the "Package
               Management Commands" section of zypper's man page for all
               available arguments.
-	    </p></dd><dt id="update"><span class="term"><code class="option">update</code>, </span><span class="term"><code class="option">up</code></span><a class="headerlink" title="Permalink to this term" href="#update">¶</a></dt><dd><p>
+	    </p></dd><dt id="update1"><span class="term"><code class="option">update</code>, </span><span class="term"><code class="option">up</code></span><a class="headerlink" title="Permalink to this term" href="#update1">¶</a></dt><dd><p>
 	      Update selected software.
               See the <code class="option">update</code> description in the "Update
               Management Commands" section of zypper's man page for all
@@ -204,9 +273,67 @@ for more information.
 	number (as displayed by <span class="command"><strong>snapper list</strong></span>) or the word
 	<code class="option">last</code>. <code class="option">last</code> will try to reset to the
 	latest working snapshot.
+      </p><p>
+	This command can be combind with the <code class="option">apply</code> command
+	to make the snapshot effective immediately.
+      </p></dd><dt id="status"><span class="term"><code class="option">status</code></span><a class="headerlink" title="Permalink to this term" href="#status">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+          This command is under development and will change in the
+          future. The status command is currently using a non-stable
+          feature of MicroOS, the control.xml file, that will change the
+          scope and location in future releases.
+        </p></div><p>
+	Shows the status of current and older snapshots. The status
+	try to represent how the system diverges from an ideal base
+	image, and the list of patterns and packages added and removed
+	from it.
+      </p><p>
+	The status is represented via a hash (currently sha256) of a
+	manifest file that contains the list of expected packages and
+	the build time of those packages. The list of expected
+	packages are calculated using the <span class="command"><strong>libsolv</strong></span>
+	library, and resolving it for the list of default patterns
+	associated with the role used during the installation.
+      </p><p>
+	Two manifest files are created. One will use the information
+	from the repositories used for the installation. The list of
+	packages (including the full version and architecture) and the
+	build time will be extracted from the repository information.
+	The other one will use the same list of packages, but using
+	the build time from the current system (if the package is
+	present).
+      </p><p>
+	Both manifest files will be the same if we have a fresh
+	installed system. But in distributions like MicroOS, that are
+	released based on a rolling model, the subsequent updates will
+	make compromises that will result in a diverged state. In that
+	way, if two systems have the same BASE_MANIFEST_DIGEST (the
+	digest calculated from the repository information), we can
+	assume that are in the same state even if the
+	SYSTEM_MANIFEST_DIGEST is different.
+      </p><p>
+	We can require of two system to be in the exact same status,
+	and for that we can compare both digests.
+      </p><p>
+	The status also shows the differences in patterns and packages
+	from the expected situation, and will save a copy of both
+	manifest for further audit of the system.
+      </p><p>
+	To write the necessary state file
+	<code class="option">EXPERIMENTAL_STATUS=1</code>has to be set in
+	transactional-update.conf.
       </p></dd></dl></div></div></div><div class="refsect1"><a name="options"></a><h2 id="OPTIONS">OPTIONS<a class="headerlink" title="Permalink to this headline" href="#OPTIONS">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="--interactive"><span class="term"><code class="option">--interactive</code>, </span><span class="term"><code class="option">-i</code></span><a class="headerlink" title="Permalink to this term" href="#--interactive">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Calls zypper in interactive mode, even if the default for this command is non-interactive.</p></dd><dt id="--non-interactive"><span class="term"><code class="option">--non-interactive</code>, </span><span class="term"><code class="option">-n</code></span><a class="headerlink" title="Permalink to this term" href="#--non-interactive">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Calls zypper in non-interactive mode, even if the default for this command is interactive.</p></dd><dt id="--continue number"><span class="term"><code class="option">--continue</code> [<span class="optional"><em class="replaceable"><code>number</code></em></span>], </span><span class="term"><code class="option">-c</code> [<span class="optional"><em class="replaceable"><code>number</code></em></span>]</span><a class="headerlink" title="Permalink to this term" href="#--continue%20number">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Use the given snapshot or, if no number is given, the current
 	default snapshot as a base for the next snapshot.</p></dd><dt id="--no-selfupdate"><span class="term"><code class="option">--no-selfupdate</code></span><a class="headerlink" title="Permalink to this term" href="#--no-selfupdate">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Skip checking for newer transactional-update versions.</p></dd><dt id="--drop-if-no-change"><span class="term"><code class="option">--drop-if-no-change</code>, </span><span class="term"><code class="option">-d</code></span><a class="headerlink" title="Permalink to this term" href="#--drop-if-no-change">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>If the action does not produce a change in the underlying
-      file system, the snapshot will be dropped.</p></dd><dt id="--quiet"><span class="term"><code class="option">--quiet</code></span><a class="headerlink" title="Permalink to this term" href="#--quiet">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Don't print warnings and informational messages to stdout.</p></dd><dt id="--help"><span class="term"><code class="option">--help</code>, </span><span class="term"><code class="option">-h</code></span><a class="headerlink" title="Permalink to this term" href="#--help">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Display help and exit</p></dd><dt id="--version"><span class="term"><code class="option">--version</code></span><a class="headerlink" title="Permalink to this term" href="#--version">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Output version information and exit</p></dd></dl></div></div><div class="refsect1"><a name="important"></a><h2 id="IMPORTANT">IMPORTANT<a class="headerlink" title="Permalink to this headline" href="#IMPORTANT">¶</a></h2><p>
+      file system, the snapshot will be dropped.</p></dd><dt id="--quiet"><span class="term"><code class="option">--quiet</code></span><a class="headerlink" title="Permalink to this term" href="#--quiet">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Don't print warnings and informational messages to stdout
+      when generated by transactional-update itself, i.e. when using the
+      <code class="option">run</code> command only the actual output of the command
+      will be shown, for other commands the <code class="option">--quiet</code>
+      option will be appended to the corresponding helper applications if
+      available (e.g. to the <span class="command"><strong>zypper</strong></span> command for the
+      <a class="link" href="#pkg_commands" title="Package Commands">Package Commands</a>).</p></dd><dt id="--help"><span class="term"><code class="option">--help</code>, </span><span class="term"><code class="option">-h</code></span><a class="headerlink" title="Permalink to this term" href="#--help">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Display help and exit</p></dd><dt id="--version"><span class="term"><code class="option">--version</code></span><a class="headerlink" title="Permalink to this term" href="#--version">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>Output version information and exit</p></dd></dl></div></div><div class="refsect1"><a name="exitstatus"></a><h2 id="EXIT STATUS">EXIT STATUS<a class="headerlink" title="Permalink to this headline" href="#EXIT%20STATUS">¶</a></h2><div class="variablelist"><dl class="variablelist"><dt id="0"><span class="term"><code class="option">0</code></span><a class="headerlink" title="Permalink to this term" href="#0">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>All commands were executed successfully.</p></dd><dt id="1"><span class="term"><code class="option">1</code></span><a class="headerlink" title="Permalink to this term" href="#1">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>One of the commands returned with an error. Due to that a
+      potential new snapshot has been deleted again.</p></dd><dt id="2"><span class="term"><code class="option">2</code></span><a class="headerlink" title="Permalink to this term" href="#2">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>The <code class="option">apply</code> command was not successfull.
+      If called together with another commands, these commands were completed
+      successfully, but the new default snapshot will not be set in the
+      live system.</p></dd></dl></div></div><div class="refsect1"><a name="important"></a><h2 id="IMPORTANT">IMPORTANT<a class="headerlink" title="Permalink to this headline" href="#IMPORTANT">¶</a></h2><p>
   Only RPMs which are fully part of the root filesystem and
   /etc can be updated. There is also
   limited handling for adding files and directories to
@@ -225,7 +352,9 @@ for more information.
   system</em></span>.
   Calling <span class="command"><strong>transactional-update</strong></span> multiple times without
   rebooting will <span class="emphasis"><em>not</em></span> include the changes of the previous
-  snapshot, thus effectively discarding all previous changes.
+  snapshot, thus effectively discarding all previous changes (except when
+  using <code class="option">--continue</code> to explicitly continue a previous snapshot
+  or when <code class="option">apply</code> was called previously).
 </p></div><div class="refsect1"><a name="see_also"></a><h2 id="SEE ALSO">SEE ALSO<a class="headerlink" title="Permalink to this headline" href="#SEE%20ALSO">¶</a></h2><p><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.conf.5.html"><span class="citerefentry"><span class="refentrytitle">transactional-update.conf</span>(5)</span></a>,
 <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="https://www.freedesktop.org/software/systemd/man/systemd.timer.html"><span class="citerefentry"><span class="refentrytitle">systemd.timer</span>(5)</span></a>,
 <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="https://www.freedesktop.org/software/systemd/man/systemd.time.html"><span class="citerefentry"><span class="refentrytitle">systemd.time</span>(7)</span></a>,
