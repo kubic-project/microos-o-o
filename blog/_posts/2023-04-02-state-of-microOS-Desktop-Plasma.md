@@ -20,7 +20,7 @@ More current updates on the state of Kalpa can be found at:
 [Pagure](https://code.opensuse.org/Kalpa/Development)
 
 
-## Current state of things
+## State of the project as of 2023-04-01
 
 MicroOS Desktop Plasma is still in an "Alpha" release state, I know many people
 are daily driving it, in various configuations, and reception is generally
