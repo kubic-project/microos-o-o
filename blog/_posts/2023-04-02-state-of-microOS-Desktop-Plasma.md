@@ -4,7 +4,7 @@ title:  "The Current State of MicroOS Desktop Plasma"
 date:   2023-04-01 20:40:00 -0800
 author: Shawn W Dunn
 ---
-### Update/Clarification 2024-02-15
+# Update/Clarification 2024-02-15
 It was recently brought to my attention that this is one of the top results that's
 showing up for many users, when searching for "openSUSE Kalpa" on various search
 engines. This blog post doesn't accurately reflect the current state of the project
