@@ -5,14 +5,7 @@ date:   2023-04-01 20:40:00 -0800
 author: Shawn W Dunn
 ---
 # Update/Clarification 2024-02-15
-It was recently brought to my attention that this is one of the top results that's
-showing up for many users, when searching for information about openSUSE Kalpa,
-openSUSE MicroOS Plasma, or other search terms, on various search engines. This
-blog post doesn't accurately reflect the current state of the project but I
-certainly understand where it may be giving a poor representation of the state
-of the project.
-
-I am not personally a fan of de-publishing things, so this disclaimer is my compromise
+This post no longer reflects the state of the openSUSE Kalpa Project.
 
 More current updates on the state of Kalpa can be found at:<br>
 [Website](http://kalpadesktop.org)<br>
