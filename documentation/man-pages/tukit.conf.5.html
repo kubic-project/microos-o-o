@@ -15,7 +15,7 @@
     h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
       visibility: visible;
     }
-  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.5.0</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="tukit.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>tukit.conf — tukit configuration file</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><p>/etc/tukit.conf</p></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>This configuration file controls and defines the behaviour of
+  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.6.0</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="tukit.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>tukit.conf — tukit configuration file</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><p>/etc/tukit.conf</p></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>This configuration file controls and defines the behaviour of
     <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="tukit.8.html"><span class="citerefentry"><span class="refentrytitle">tukit</span>(8)</span></a>.</p><p>The tukit.conf file uses INI
     style assignments, e.g. <code class="code">PARAMETER=value</code>.</p><p>A reference file (also used for reading the default values) can be
     found in
@@ -69,6 +69,14 @@
               BINDDIRS[1]="/usr/local"
               BINDDIRS[2]="/usr/local/extra"
               BINDDIRS[3]="/var/lib/images"
+            </pre><p>
+            Instead of numbers it is also possible to use names for the
+            array:
+            </p><pre class="programlisting">
+              BINDDIRS[0]="/opt"
+              BINDDIRS[usrlocal]="/usr/local"
+              BINDDIRS[extra]="/usr/local/extra"
+              BINDDIRS[images]="/var/lib/images"
             </pre><p>
           </p><p>
             Note that in some situations one may be tempted to expose

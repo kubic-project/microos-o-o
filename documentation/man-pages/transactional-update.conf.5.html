@@ -15,7 +15,7 @@
     h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
       visibility: visible;
     }
-  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.5.0</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="transactional-update.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>transactional-update.conf — transactional-update configuration files</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="literallayout"><p><br>
+  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.6.0</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="transactional-update.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>transactional-update.conf — transactional-update configuration files</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="literallayout"><p><br>
 /etc/transactional-update.conf<br>
 /usr/etc/transactional-update.conf<br>
 /usr/etc/transactional-update.conf.d/*<br>
@@ -41,16 +41,36 @@
                 </p></dd><dt id="kured"><span class="term">"<code class="literal">kured</code>"</span><a class="headerlink" title="Permalink to this term" href="#kured">¶</a></dt><dd><p>
 		  Will inform kured (kubernetes reboot daemon) to reboot the system.
                 </p></dd><dt id="rebootmgr"><span class="term">"<code class="literal">rebootmgr</code>"</span><a class="headerlink" title="Permalink to this term" href="#rebootmgr">¶</a></dt><dd><p>
-                   <span class="citerefentry"><span class="refentrytitle">rebootmgrctl</span>(1)</span>
-                   will be triggered to initiate a reboot.
+                  Triggers
+                  <span class="citerefentry"><span class="refentrytitle">rebootmgrctl</span>(1)</span>
+                  to initiate a "<code class="literal">reboot</code>" or, if possible
+                  and that information is provided by
+                  <span class="citerefentry"><span class="refentrytitle">zypp-boot-plugin</span>(8)</span>
+                  and it is allowed in
+                  <a href="tukit.conf.5.html"><span class="citerefentry"><span class="refentrytitle">tukit.conf</span>(5)</span></a>,
+                  a faster "<code class="literal">soft-reboot</code>".
                 </p></dd><dt id="systemd"><span class="term">"<code class="literal">systemd</code>"</span><a class="headerlink" title="Permalink to this term" href="#systemd">¶</a></dt><dd><p>
-                   <a href="https://www.freedesktop.org/software/systemd/man/systemctl.html"><span class="citerefentry"><span class="refentrytitle">systemctl</span>(1)</span></a>
-                   will be called to initiate a reboot.
+                  Uses
+                  <a href="https://www.freedesktop.org/software/systemd/man/systemctl.html"><span class="citerefentry"><span class="refentrytitle">systemctl</span>(1)</span></a>
+                  to initiate a reboot. This can either be a full
+                  "<code class="literal">reboot</code>" or, if possible and that
+                  information is provided by
+                  <span class="citerefentry"><span class="refentrytitle">zypp-boot-plugin</span>(8)</span>
+                  and it is allowed in
+                  <a href="tukit.conf.5.html"><span class="citerefentry"><span class="refentrytitle">tukit.conf</span>(5)</span></a>,
+                  a faster "<code class="literal">soft-reboot</code>" or
+                  "<code class="literal">kexec</code>".
                 </p></dd><dt id="kexec"><span class="term">"<code class="literal">kexec</code>"</span><a class="headerlink" title="Permalink to this term" href="#kexec">¶</a></dt><dd><p>
                   Will use kexec to reboot the system; this will skip hardware
                   initialization and thus boot faster than
                   "<code class="literal">systemd</code>".
-                </p></dd><dt id="notify"><span class="term">"<code class="literal">notify</code>"</span><a class="headerlink" title="Permalink to this term" href="#notify">¶</a></dt><dd><p>
+                </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+                    This option is deprecated, use "<code class="literal">systemd</code>"
+                    together with
+                    <span class="citerefentry"><span class="refentrytitle">zypp-boot-plugin</span>(8)</span>
+                    to automatically detect whether "<code class="literal">kexec</code>"
+                    can be used.
+                  </p></div></dd><dt id="notify"><span class="term">"<code class="literal">notify</code>"</span><a class="headerlink" title="Permalink to this term" href="#notify">¶</a></dt><dd><p>
                   Trigger the <span class="application">Transactional Update
                   Notifier</span> to inform the user about the
                   necessary reboot.
