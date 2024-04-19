@@ -15,11 +15,16 @@
     h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
       visibility: visible;
     }
-  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.6.5</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="tukit.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>tukit.conf — tukit configuration file</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><p>/etc/tukit.conf</p></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>This configuration file controls and defines the behaviour of
+  </style><a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="transactional-update.index.html">Index </a><span xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" style="float:right">transactional-update 4.6.6</span><hr xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><div class="refentry"><a name="tukit.conf.5"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>tukit.conf — tukit configuration file</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="literallayout"><p><br>
+/etc/tukit.conf<br>
+/etc/tukit.d/*.conf<br>
+    </p></div></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>These configuration files control and define the behavior of
     <a xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common" href="tukit.8.html"><span class="citerefentry"><span class="refentrytitle">tukit</span>(8)</span></a>.</p><p>The tukit.conf file uses INI
     style assignments, e.g. <code class="code">PARAMETER=value</code>.</p><p>A reference file (also used for reading the default values) can be
     found in
-    /usr/etc/tukit.conf.</p></div><div class="refsect1"><a name="id-1.6"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><p>The following options are available in the
+    /usr/etc/tukit.conf.</p><p>Configuration file snippets (to overwrite only parts of the
+    configuration) can also be used in
+    /etc/tukit.d/*.conf.</p></div><div class="refsect1"><a name="id-1.6"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><p>The following options are available in the
       "<code class="literal">tukit</code>" section:
     </p><div class="variablelist"><dl class="variablelist"><dt id="DRACUT_SYSROOT"><span class="term"><code class="varname">DRACUT_SYSROOT</code></span><a class="headerlink" title="Permalink to this term" href="#DRACUT_SYSROOT">¶</a></dt><dd xmlns:ss="http://docbook.sf.net/xmlns/string.subst/1.0" xmlns:exsl="http://exslt.org/common"><p>
             Directory where "<code class="literal">dracut</code>" will mount the
