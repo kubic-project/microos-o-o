@@ -3,7 +3,7 @@ author: Fabian Vogt
 date: 2024-05-17 11:20:37+02:00
 layout: post
 license: CC-BY-SA-3.0
-title: Easily set up Passwordless SSH Autentication
+title: Easily set up Passwordless SSH Authentication
 categories:
 - Announcements
 - openSUSE
