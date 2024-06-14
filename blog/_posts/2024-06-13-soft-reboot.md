@@ -21,7 +21,7 @@ The advantage of this method is a pretty fast reboot:
 
 But there are some challenges to be solved:
 * Kernel tables will not be flushed (may break services like firewalld+podman).
-* No initrd means everything done in the initrd normally gets not executed. In the case of MicroOS, this will break mount of overlayfs for /etc with transactional-update or relabeling the system for a new SELinux policy.
+* No initrd means that everything that is normally done in the initrd is not executed. In the case of MicroOS, this will break mount of overlayfs for /etc with transactional-update or relabeling the system for a new SELinux policy.
 * /run will not be cleared, which means reboot needed trigger will not be removed. This may affect many more services not expecting that files survive in /run.
 
 Nevertheless, this method is ideal for quick reboots with transactional-update, e.g. if you only installed another package.
@@ -52,10 +52,14 @@ The configuration file `/usr/etc/tukit.conf` defines the system default. The var
 
 To enable soft-reboot support in transactional-update, create the directory `/etc/tukit.conf.d/` and create a file:
 
-`echo "REBOOT_ALLOW_SOFT_REBOOT=true" > /etc/tukit.conf.d/soft-reboot.conf`.
+```
+echo "REBOOT_ALLOW_SOFT_REBOOT=true" > /etc/tukit.conf.d/soft-reboot.conf
+```
 
 ### How to disable
 
 To disable soft-reboot support in transactional-update, create the directory `/etc/tukit.conf.d/` and create a file:
 
-`echo "REBOOT_ALLOW_SOFT_REBOOT=false" > /etc/tukit.conf.d/soft-reboot.conf`.
+```
+echo "REBOOT_ALLOW_SOFT_REBOOT=false" > /etc/tukit.conf.d/soft-reboot.conf
+```
