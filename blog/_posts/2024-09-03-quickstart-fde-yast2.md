@@ -63,6 +63,14 @@ After editing this file, call `sdbootutil update-all-entries` to update the
 bootloader configuration. If that option does not exist yet or does not work,
 a workaround is: `sdbootutil remove-all-kernels && sdbootutil add-all-kernels`.
 
+## Next Steps
+
+The next steps will be:
+
+* Support grub2-BLS (grub2 following the [Boot Loader Specification](https://uapi-group.org/specifications/specs/boot_loader_specification/))
+* Add support to the installers (YaST2 and Agama)
+* Make this the default if a TPM2 chip is present
+
 ## Further Documentation
 
 * [Full Disk Encryption (FDE)](https://en.opensuse.org/Portal:MicroOS/FDE)
