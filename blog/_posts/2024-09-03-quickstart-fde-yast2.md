@@ -10,7 +10,8 @@ author: Thorsten Kukuk
 This is a quick start guide for Full Disk Encryption with TPM or FIDO2 and
 YaST2 on openSUSE MicroOS. It focuses on the few steps to
 install openSUSE MicroOS with YaST2 and using Full Disk Encryption
-secured by a TPM2 chip and [measured boot](https://en.opensuse.org/Portal:MicroOS/RemoteAttestation#Measured_boot).
+secured by a TPM2 chip and [measured boot](https://en.opensuse.org/Portal:MicroOS/RemoteAttestation#Measured_boot)
+or a FIDO2 key.
 
 ## Hardware Requirement:
 - UEFI Firmware
@@ -31,7 +32,7 @@ three btrfs subvolumes and change the LUKS key derivation function to
 
 * Follow the workflow until "Installation Settings"
 * Installation Settings:
-  *  Partitioning:
+  * Partitioning:
     * Select "Guided Setup" and "Enable Disk Encryption", keep the other defaults
   * Booting:
     * Change Boot Loader Type from "GRUB2 for EFI" to "Systemd Boot", ignore "Systemd-boot support is work in progress" and continue
