@@ -71,6 +71,8 @@ The next steps will be:
 * Add support to the installers (YaST2 and Agama)
 * Make this the default if a TPM2 chip is present
 
+Any help is welcome!
+
 ## Further Documentation
 
 * [Full Disk Encryption (FDE)](https://en.opensuse.org/Portal:MicroOS/FDE)
