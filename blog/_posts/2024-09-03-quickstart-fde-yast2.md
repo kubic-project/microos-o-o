@@ -63,6 +63,20 @@ After editing this file, call `sdbootutil update-all-entries` to update the
 bootloader configuration. If that option does not exist yet or does not work,
 a workaround is: `sdbootutil remove-all-kernels && sdbootutil add-all-kernels`.
 
+## Re-enrollment
+If the prediction system fails, a new policy must be created for the new measurements to replace the policy stored in the TPM2.
+
+If you have a recovery PIN:
+```
+  # sdbootutil --ask-pin update-predictions
+```
+
+If you don't have the recovery PIN, you can set one with this steps:
+```
+  # sdbootutil unenroll --method=tpm2
+  # PIN=<new recovery PIN> sdbootutil enroll --method=tpm2
+```
+
 ## Next Steps
 
 The next steps will be:
