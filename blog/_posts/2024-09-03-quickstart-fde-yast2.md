@@ -77,6 +77,10 @@ If you don't have the recovery PIN, you can set one with this steps:
   # PIN=<new recovery PIN> sdbootutil enroll --method=tpm2
 ```
 
+## Virtual Machines
+
+If your machine is a VM, it is recommended to remove the "0" from the `FDE_SEAL_PCR_LIST` variable in `/etc/sysconfig/fde-tools`. An update of the hypervisor can change PCR0. Since such an update is not visible inside the VM, the PCR values cannot be updated. As result, the disk cannot be decrypted automatically at the next boot, the recovery key needs to be entered and a manual re-enrollment is necessary.
+
 ## Next Steps
 
 The next steps will be:
