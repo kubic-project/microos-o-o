@@ -1,6 +1,6 @@
-﻿---
+---
 layout: post
-title: "Managing System Extensions with sysextmgrcli"
+title:  "Managing System Extensions with sysextmgrcli"
 date:   2026-04-23 17:27:00 +0200
 author: Stefan Schubert
 ---
@@ -12,7 +12,7 @@ and transactional updates are the law of the land.
 But what happens when you need to add software or system extensions without rebooting or messing with
 your base OS layers?
 
-Enter **System Extensions (sysext)** and the utility designed to make them manageable: `sysextmgrcli`.
+Enter **System Extensions (sysext images)** and the utility designed to make them manageable: `sysextmgrcli`.
 
 ---
 
@@ -55,7 +55,7 @@ sysextmgrcli check
 
 ### 2. Installing New Extensions
 You can install by providing a name and a source URL. The tool automatically handles SHA256 verification and
-checks the JSON manifest to ensure it fits your OS.
+checks if it fits your OS.
 
 ```
 # --url is optional (default: https://download.opensuse.org/tumbleweed/appliances/ )
@@ -76,9 +76,9 @@ sysextmgrcli cleanup
 ## The "Activation" Catch
 It is important to note that sysextmgrcli is a manager, not an activator. It handles the logistics: downloading, version checking, and symlinking. To actually "plug in" the extensions to your running system, you still use standard systemd-sysext commands:
 
-* Manual merge: `systemd-sysext merge`
+* Manual activation: `systemd-sysext merge`
 
-* Manual unmerge: `systemd-sysext unmerge`
+* Manual deactivation: `systemd-sysext unmerge`
 
 * Enable at boot: `systemctl enable systemd-sysext.service`
 
@@ -91,10 +91,10 @@ It is important to note that sysextmgrcli is a manager, not an activator. It han
 ## Summary
 
 ### You need `git` on your **openSUSE MicroOS** ?
-Just install the `git` system extention wit `sysextmgrcli`, enable and use it...
+Just install the `git` system extention with `sysextmgrcli`, activate and use it...
 
 ### You do not need 'git' anymore on your system ?
-Just disable it and it is not available anymore...
+Just deactivate it and it is not available anymore...
 
 sysextmgrcli bridges the gap between static immutable infrastructure and the need for flexible system additions. By leveraging the Btrfs directory structure of MicroOS, it ensures your system remains clean, version-synced, and easy to manage.
 
