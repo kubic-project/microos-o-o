@@ -11,6 +11,8 @@ If you are running **openSUSE MicroOS**, you already know the drill: the root fi
 and transactional updates are the law of the land.
 But what happens when you need to add software or system extensions without rebooting or messing with
 your base OS layers?
+E.g. You need strace or gdb to debug a running application, but a reboot to install this tools would
+change the situation.
 
 Enter **System Extensions (sysext images)** and the utility designed to make them manageable: `sysextmgrcli`.
 
@@ -24,13 +26,15 @@ by Thorsten Kukuk. It is designed specifically to play nice with the atomic natu
 Instead of forcing you to use `sudo` for every query, it talks to a background daemon (`sysextmgrd`) via
 **Varlink**. This architecture allows unprivileged users to list existing system extension images without
 needing root permissions, while the daemon handles the heavy lifting of downloads and verification via `systemd-pull`.
+For security reasons root provileges are still required for installing or updating sysext images.
 
 ## The Architecture: Smart Snapshots
 
 One of the cleverest things about `sysextmgrcli` is how it handles storage to be efficient and "rollback-safe":
 
 * **/var/lib/sysext-store**: This is where the actual image files live. Since `/var` is a separate subvolume
-shared across all Btrfs snapshots, you only store the image once, saving disk space.
+shared across all Btrfs snapshots, you only store the image once, saving disk space. If you have no network available,
+that's the location for storing offline or even own build sysext images via e.g. an USB device.
 * **/etc/extensions**: This directory contains **symlinks** to the images in the store. Because `/etc` is part of
 your root snapshot, the extensions are tied to your current system state. 
 
@@ -85,16 +89,16 @@ It is important to note that sysextmgrcli is a manager, not an activator. It han
 ## Available default system extention (sysext) images:
 
 * debug (babeltrace, gdb, ltrace, strace, traceroute)
-* gcc (cpp, gcc, make, patch, update-alternatives)
+* gcc (cpp, gcc, make, patch)
 * git (git, git-core)
 
 ## Summary
 
 ### You need `git` on your **openSUSE MicroOS** ?
-Just install the `git` system extention with `sysextmgrcli`, activate and use it...
+Just call `sysextmgrcli install git ; systemd-sysext merge` and use it...
 
 ### You do not need 'git' anymore on your system ?
-Just deactivate it and it is not available anymore...
+Just call `systemd-sysext unmerge` and it is not available anymore...
 
 sysextmgrcli bridges the gap between static immutable infrastructure and the need for flexible system additions. By leveraging the Btrfs directory structure of MicroOS, it ensures your system remains clean, version-synced, and easy to manage.
 
