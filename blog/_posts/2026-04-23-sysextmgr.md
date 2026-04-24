@@ -1,4 +1,5 @@
 ﻿---
+layout: post
 title: "Managing System Extensions with sysextmgrcli"
 date:   2026-04-23 17:27:00 +0200
 author: Stefan Schubert
